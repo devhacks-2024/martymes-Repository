@@ -8,16 +8,19 @@ class Hp_Bar(pygame.sprite.Sprite):
     self.max_hp = player_hp
     asset_names = hp_bar_assets()
 
-    self.anim_100 = [pygame.image.load(asset_names[0]).convert_alpha()]
-    self.anim_90 = [pygame.image.load(asset_names[1]).convert_alpha()]
-    self.anim_80 = [pygame.image.load(asset_names[2]).convert_alpha()]
-    self.anim_70 = [pygame.image.load(asset_names[3]).convert_alpha()]
-    self.anim_60 = [pygame.image.load(asset_names[4]).convert_alpha()]
-    self.anim_50 = [pygame.image.load(asset_names[5]).convert_alpha()]
-    self.anim_40 = [pygame.image.load(asset_names[6]).convert_alpha()]
-    self.anim_30 = [pygame.image.load(asset_names[7]).convert_alpha(), pygame.image.load(asset_names[8]).convert_alpha()]
-    self.anim_20 = [pygame.image.load(asset_names[9]).convert_alpha(), pygame.image.load(asset_names[10]).convert_alpha()]
-    self.anim_10 = [pygame.image.load(asset_names[11]).convert_alpha(), pygame.image.load(asset_names[12]).convert_alpha()]
+    width = 400
+    height = 400
+
+    self.anim_100 = [pygame.transform.scale(pygame.image.load(asset_names[0]).convert_alpha(), (width, height))]
+    self.anim_90 = [pygame.transform.scale(pygame.image.load(asset_names[1]).convert_alpha(), (width,height))]
+    self.anim_80 = [pygame.transform.scale(pygame.image.load(asset_names[2]).convert_alpha(), (width,height))]
+    self.anim_70 = [pygame.transform.scale(pygame.image.load(asset_names[3]).convert_alpha(), (width,height))]
+    self.anim_60 = [pygame.transform.scale(pygame.image.load(asset_names[4]).convert_alpha(), (width,height))]
+    self.anim_50 = [pygame.transform.scale(pygame.image.load(asset_names[5]).convert_alpha(), (width,height))]
+    self.anim_40 = [pygame.transform.scale(pygame.image.load(asset_names[6]).convert_alpha(), (width,height))]
+    self.anim_30 = [pygame.transform.scale(pygame.image.load(asset_names[7]).convert_alpha(), (width,height)), pygame.image.load(asset_names[8]).convert_alpha()]
+    self.anim_20 = [pygame.transform.scale(pygame.image.load(asset_names[9]).convert_alpha(), (width, height)), pygame.transform.scale(pygame.image.load(asset_names[10]).convert_alpha(), (width, height))]
+    self.anim_10 = [pygame.transform.scale(pygame.image.load(asset_names[11]).convert_alpha(), (width, height)), pygame.transform.scale(pygame.image.load(asset_names[12]).convert_alpha(), (width, height))]
 
     self.anim_time = 0
     self.current_anim = self.anim_100
@@ -27,7 +30,20 @@ class Hp_Bar(pygame.sprite.Sprite):
 
     self.image = self.anim_100[0]
     self.rect = self.image.get_rect()
-    self.rect.center = (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET)
+    self.rect.center = (SCREEN_WIDTH - 1050, SCREEN_HEIGHT - 100)
+
+  def render_image(self, assets, size):
+        loaded_pictures = []
+        for pic_name in assets:
+            loaded_pictures.append(pygame.image.load(pic_name).convert_alpha())
+        scaled_width = size  # New width for the scaled image
+        scaled_height = size  # New height for the scaled image
+
+        scaled_pictures = []
+        for pic in loaded_pictures:
+            scaled_pictures.append(pygame.transform.scale(pic, (scaled_width, scaled_height)))
+
+        return scaled_pictures
 
   def update_hp(self, hp):
     if float(hp)/self.max_hp >= 1:
