@@ -41,7 +41,6 @@ class Projectile(Character):
         if current_time - self.last_animation_time > self.current_animation_speed:
             
             self.alive_time = self.alive_time + 1
-            print(self.alive_time)
             self.current_animation_index = (self.current_animation_index + 1) % len(self.current_animation)
             self.image = self.current_animation[self.current_animation_index]
             self.last_animation_time = current_time

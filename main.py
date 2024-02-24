@@ -102,8 +102,6 @@ def handle_movement(player):
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             player.moveY(1)
 
-    
-
 def draw_sprites():
     the_player.update()
     player_attacks.update()
@@ -123,9 +121,6 @@ def check_halt(halt_player):
     if(halt_player[1] + time_wait < pygame.time.get_ticks()):
         halt_player[0] = False
 
-
-# Main game loop
-
 def draw_shop():
     global ITEM_1_BOUGHT
     global ITEM_2_BOUGHT
@@ -135,9 +130,8 @@ def draw_shop():
     
     running = True
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+        if pygame.key.get_pressed()[pygame.K_TAB]:
+            running = False
 
         shop_screen.fill(BLACK)
         if not ITEM_1_BOUGHT:
@@ -176,8 +170,6 @@ def handle_collision():
         if(player.get_hp()<0):
             running = False
 
-
-
 # Main game loop
 while running:
     #update enemies location of player
@@ -202,8 +194,6 @@ while running:
     # Check if shop opened
     if(pygame.key.get_pressed()[pygame.K_TAB]):
         draw_shop()
-    
-
 
     # Draw the square
     draw_sprites()
