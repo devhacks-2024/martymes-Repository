@@ -33,22 +33,3 @@ shop_items = pygame.sprite.Group((item_1, item_2, item_3))
 ITEM_1_BOUGHT = False
 ITEM_2_BOUGHT = False
 ITEM_3_BOUGHT = False
-
-# Loss and win screens
-screenL = pygame.sprite.Sprite()
-screenL.image = pygame.image.load("assets/loss_screen.png")
-screenL.rect = screenL.image.get_rect()
-
-screenL2 = pygame.sprite.Group(screenL)
-
-screenW = pygame.sprite.Sprite()
-screenW.image = pygame.image.load("assets/win_screen.png")
-screenW.rect = screenW.image.get_rect()
-
-screenW2 = pygame.sprite.Group(screenW)
-
-screenS = pygame.sprite.Sprite()
-screenS.image = pygame.image.load("assets/start_screen.png")
-screenS.rect = screenS.image.get_rect()
-
-screenS2 = pygame.sprite.Group(screenS)
