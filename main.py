@@ -48,6 +48,10 @@ num_3 = font.render('3', True, WHITE)
 num_3_rect = num_3.get_rect()
 num_3_rect.center = (900/2 + 225, 500/2 + 50)
 
+lose_screen = pygame.sprite.Sprite()
+lose_screen.image = pygame.image.load("assets/losescreen.png").convert_alpha()
+lose_screen.rect = lose_screen.image.get_rect()
+
 shop_items = pygame.sprite.Group((item_1, item_2))
 ITEM_1_BOUGHT = False
 ITEM_2_BOUGHT = False
@@ -134,6 +138,19 @@ def draw_shop():
     pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
     screen.blit(bg, (0,0))
 
+def lose_screen():
+    
+    screen_display = pygame.display.setMode((1280, 720))
+    pygame.display.set_caption('You Lose')
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+    screen_display.fill(BLACK)
+
 # Main game loop
 running = True
 while running:
@@ -166,6 +183,8 @@ while running:
 
     # Cap the frame rate
     pygame.time.Clock().tick(60)
+
+lose_screen()
 
 # Quit Pygame
 pygame.quit()
