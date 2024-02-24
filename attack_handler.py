@@ -3,7 +3,7 @@ import pygame
 from var_setup import player_size
 from projectile import*
 from damage_area import *
-EXPLODE_SIZE = 100
+EXPLODE_SIZE = 150
 #for the player to attack
 class Attack_Handler(pygame.sprite.Sprite):
 
