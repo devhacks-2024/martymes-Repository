@@ -20,13 +20,13 @@ pygame.display.set_caption("Movable Square")
 player_size = 100
 player_speed = 5
 
-player = character(player_size, player_speed)
+player = character(player_size, player_speed, (0,0))
 the_player = pygame.sprite.Group()
 the_player.add(player)
 
 
 enemies = pygame.sprite.Group()
-enemy1 = enemy(player_size, player_speed-4)
+enemy1 = enemy(player_size, player_speed-4, (300, 400))
 enemies.add(enemy1)
 
 def handle_movement():
@@ -73,6 +73,12 @@ while running:
     the_player.update()
     the_player.draw(screen)
     enemies.draw(screen)
+
+
+    #check if touching
+    colliding_sprites = pygame.sprite.spritecollide(player, enemies, dokill=True, collided=None)
+
+
 
     # Update the display
     pygame.display.flip()

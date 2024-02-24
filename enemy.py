@@ -1,7 +1,7 @@
 from character import *
 class enemy(character):
-    def __init__(self, size, speed):
-        super().__init__(size, speed)
+    def __init__(self, size, speed, starting_position):
+        super().__init__(size, speed, starting_position)
         self.player_location_x = 0
         self.player_location_y = 0
 
