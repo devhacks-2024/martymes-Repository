@@ -144,12 +144,35 @@ def draw_start_screen() -> bool:
     pygame.display.flip()
     return start
 
+
+WD = 7000
+E= 3
+
+wave = 1
+wave_delay = WD + wave*WD/2
+enemy_amount = E + wave**2*E
+last_wave_spawned = pygame.time.get_ticks()
+
 running = draw_start_screen()
 # Main game loop
 while running:
     #update enemies location of player
     enemy_ping(enemy_handler.get_enemies(), player.getX(), player.getY())
-    
+
+  
+
+    if(wave == 5):
+        draw_win_screen()
+
+    #spawn in wave
+    if(last_wave_spawned + wave_delay < pygame.time.get_ticks() and wave <= 4):
+        side = ["right", "left"]
+        enemy_handler.create_wave(enemy_amount, random.choice(side))
+        wave += 1
+        last_wave_spawned = pygame.time.get_ticks()
+        wave_delay = WD + wave*WD/2
+
+
     # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -196,18 +219,20 @@ while running:
     for the_enemy1, colliding_sprites in collisions.items():
         for the_enemy2 in colliding_sprites:
             if(the_enemy1 != the_enemy2):
-                if(the_enemy1.getX() > the_enemy2.getX()):
-                    the_enemy1.moveX(1)
-                else:
-                    the_enemy1.moveX(-1)
-                if(the_enemy1.getY() > the_enemy2.getY()):
-                    the_enemy1.moveY(1)
-                else:
-                    the_enemy1.moveY(-1)
 
+                if(wave <= 3):
+                    if(the_enemy1.getX() > the_enemy2.getX()):
+                        the_enemy1.moveX(1)
+                    else:
+                        the_enemy1.moveX(-1)
+                    if(the_enemy1.getY() > the_enemy2.getY()):
+                        the_enemy1.moveY(1)
+                    else:
+                        the_enemy1.moveY(-1)
+                else:
                 #funny movement lol
-                # the_enemy1.moveX(random.uniform(-3.0, 3.0))
-                # the_enemy1.moveY(random.uniform(-3.0, 3.0))
+                    the_enemy1.moveX(random.uniform(-3.0, 3.0))
+                    the_enemy1.moveY(random.uniform(-3.0, 3.0))
 
     # Update the display
     pygame.display.flip()

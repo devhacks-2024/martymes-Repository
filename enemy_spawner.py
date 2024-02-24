@@ -18,7 +18,7 @@ class Enemy_Spawner(pygame.sprite.Sprite):
         if(side == "right"):
             start_pos_x = SCREEN_WIDTH + SPAWN_RANGE
         else:
-            start_pos_x = SCREEN_WIDTH - SPAWN_RANGE
+            start_pos_x = - SPAWN_RANGE
         for i in range(amount):
             start_pos_y = random.randint(0,SCREEN_HEIGHT)
             speed = random.choice(ENEMY_SPEED)

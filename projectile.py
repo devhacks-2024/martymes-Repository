@@ -12,7 +12,8 @@ class Projectile(Character):
         self.attack_handler = attack_handler
         animation = self.projectile_direction(direction, animations)#down up left right
         super().__init__(self.size, self.speed, 0, start_pos, animation)
-        
+        self.rect.topright = start_pos
+
         self.damage = damage
         self.current_animation_speed = 500
         self.alive_time = 0

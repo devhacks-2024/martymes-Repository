@@ -1,10 +1,11 @@
 from typing import Any
 import pygame
-from var_setup import player_size
+from var_setup import player_size, EXPLODE_SIZE
 from projectile import*
 from damage_area import *
+import random
 
-EXPLODE_SIZE = 150
+
 #for the player to attack
 class Attack_Handler(pygame.sprite.Sprite):
 
@@ -15,7 +16,7 @@ class Attack_Handler(pygame.sprite.Sprite):
     def player_attack(self, time_halted):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_p] or keys[pygame.K_SPACE] and not time_halted[0]:
-            new_attack = Projectile(self, (self.player.getX() + player_size//2, self.player.getY() + player_size//2), self.player.get_damage() ,self.player.get_direction(), [projectile_down(), projectile_up(), projectile_left(), projectile_right()])
+            new_attack = Projectile(self, (self.player.getX() + player_size//2, self.player.getY() ), self.player.get_damage() ,self.player.get_direction(), [projectile_down(), projectile_up(), projectile_left(), projectile_right()])
             self.player_attacks.add(new_attack)
             time_halted[1] = pygame.time.get_ticks()
             time_halted[0] = True

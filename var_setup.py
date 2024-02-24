@@ -15,8 +15,10 @@ ENEMY_SPEED = [1,2,3]#choose one
 ENEMY_HP = 20
 SPAWN_RANGE = 50
 
+#exploision
+EXPLODE_SIZE = 150
 
 player_size = 100
 player_hp = 100
-player_speed = 5
+player_speed = 10
 time_halted = [False, 0]
