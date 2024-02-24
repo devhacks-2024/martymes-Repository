@@ -24,7 +24,7 @@ class Attack_Handler(pygame.sprite.Sprite):
         
     def player_freeze(self, time_halted, enemies, ability1):
         keys = pygame.key.get_pressed()
-        if (keys[pygame.K_q] or keys[pygame.K_o] and not time_halted[0] and ability1):
+        if ((keys[pygame.K_q] or keys[pygame.K_o])and not time_halted[0] and ability1):
             
             time_halted[1] = pygame.time.get_ticks()
             time_halted[0] = True
