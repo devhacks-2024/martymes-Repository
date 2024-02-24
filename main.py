@@ -115,7 +115,7 @@ def draw_win_screen():
 
 def draw_start_screen() -> bool:
     start = True
-    start_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    start_screen = pygame.display.set_mode((512, 512))
     pygame.display.set_caption('why play, press enter to start')
 
     screenS2.update()
