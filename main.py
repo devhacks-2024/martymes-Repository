@@ -3,6 +3,9 @@ import sys
 
 from character import *
 from enemy import *
+
+from player import *
+from character_frames import *
 from inventory import *
 
 
@@ -21,7 +24,7 @@ pygame.display.set_caption("Movable Square")
 player_size = 100
 player_speed = 5
 
-player = character(player_size, player_speed, (0,0))
+player = Player(player_size, player_speed, (0,0), [player_down(), player_up(), player_right(), player_left()])
 the_player = pygame.sprite.Group()
 the_player.add(player)
 
@@ -30,7 +33,7 @@ inv = pygame.sprite.Group(inv_sprite)
 
 
 enemies = pygame.sprite.Group()
-enemy1 = enemy(player_size, player_speed-4, (300, 400))
+enemy1 = Enemy(player_size, player_speed-4, (300, 400), player_down())
 enemies.add(enemy1)
 
 def handle_movement():
@@ -59,7 +62,7 @@ def draw_sprites():
 
 def enemy_ping(enemies, x, y):
     for e in enemies.sprites():
-        if isinstance(e, enemy): 
+        if isinstance(e, Enemy): 
             e.player_location(x, y)
 
 # Main game loop

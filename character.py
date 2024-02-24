@@ -1,34 +1,41 @@
 import pygame
 
-class character(pygame.sprite.Sprite):
-    def __init__(self, size, speed, starting_pos):
+class Character(pygame.sprite.Sprite):
+    def __init__(self, size, speed, starting_pos, idle_animation):
         super().__init__()
         # Load and scale player images for walking animation
-        self.image_walk1 = pygame.image.load("assets/player1.png").convert_alpha()
-        self.image_walk2 = pygame.image.load("assets/player2.png").convert_alpha()
-        scaled_width = size  # New width for the scaled image
-        scaled_height = size  # New height for the scaled image
-        self.image_walk1 = pygame.transform.scale(self.image_walk1, (scaled_width, scaled_height))
-        self.image_walk2 = pygame.transform.scale(self.image_walk2, (scaled_width, scaled_height))
-        
+
+        scaled_pictures = self.render_image(idle_animation, size)
         # Set up initial image and rect
-        self.image = self.image_walk1
-        self.rect = self.image.get_rect()
-        self.rect.center = starting_pos # Initial position at the center of the screen
+        self.image = scaled_pictures[0]
+        self.rect = self.image.get_rect() #sets the hit box of the sprite
+        self.rect.center = starting_pos # Initial the position 
         
         # Define size and speed attributes
         self.square_size = size
         self.square_speed = speed
         
         # Walking animation attributes
-        self.walk_animation_frames = [self.image_walk1, self.image_walk2]
-        self.walk_animation_index = 0
-        self.walk_animation_speed = 100 # Speed of animation change
+        self.current_animation = scaled_pictures
+        self.current_animation_index = 0
+        self.current_animation_speed = 100 # Speed of animation change
         self.last_animation_time = pygame.time.get_ticks()
 
 
         
-        
+    def render_image(self, idle_animation, size):
+        loaded_pictures = []
+        for pic_name in idle_animation:
+            loaded_pictures.append(pygame.image.load(pic_name).convert_alpha())
+        scaled_width = size  # New width for the scaled image
+        scaled_height = size  # New height for the scaled image
+
+        scaled_pictures = []
+        for pic in loaded_pictures:
+            scaled_pictures.append(pygame.transform.scale(pic, (scaled_width, scaled_height)))
+
+        return scaled_pictures
+
     def moveX(self, move):
         self.rect.x += move * self.square_speed
         
@@ -50,9 +57,9 @@ class character(pygame.sprite.Sprite):
     def update(self):
         # Update walking animation
         current_time = pygame.time.get_ticks()
-        if current_time - self.last_animation_time > self.walk_animation_speed:
-            self.walk_animation_index = (self.walk_animation_index + 1) % len(self.walk_animation_frames)
-            self.image = self.walk_animation_frames[self.walk_animation_index]
+        if current_time - self.last_animation_time > self.current_animation_speed:
+            self.current_animation_index = (self.current_animation_index + 1) % len(self.current_animation)
+            self.image = self.current_animation[self.current_animation_index]
             self.last_animation_time = current_time
 
         
