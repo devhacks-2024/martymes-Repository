@@ -1,12 +1,15 @@
 import pygame
 from character import *
+from character_frames import *
+from damage_area import *
 
 class Projectile(Character):
     
-    def __init__(self, start_pos, damage, direction, animations) -> None:
+    def __init__(self, attack_handler, start_pos, damage, direction, animations) -> None:
         self.size = 100
         self.speed = 5
         self.direction = direction
+        self.attack_handler = attack_handler
         animation = self.projectile_direction(direction, animations)#down up left right
         super().__init__(self.size, self.speed, 0, start_pos, animation)
         
@@ -19,14 +22,18 @@ class Projectile(Character):
     
     def projectile_direction(self, direction, animations):
         if(direction == "down"):
-            return animations[0]
+            return projectile_down()
         if(direction == "up"):
-            return animations[1]
+            return  projectile_up()
         if(direction == "left"):
-            return animations[2]
+            return projectile_left()
         if(direction == "right"):
-            return animations[3]
+            return projectile_right()
         
+    def explode(self):
+        self.attack_handler.explosion((self.getX(), self.getY()))
+        self.kill()
+
     def update(self):
         current_time = pygame.time.get_ticks()
         if(self.direction == "down"):
@@ -45,4 +52,6 @@ class Projectile(Character):
             self.last_animation_time = current_time
 
         if(self.alive_time + 1 > len(self.current_animation)):
+
+            #maybe call a finish animation function to be overwritten
             self.kill()
