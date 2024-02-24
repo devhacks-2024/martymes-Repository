@@ -27,7 +27,7 @@ def draw_sprites():
     attack_handler.update(screen)
     enemy_handler.update(screen)
     effect_engine.update(screen)
-    inv.update()
+    inv_update.update()
     hp_bar_sprite.update()
 
     inv_sprite.draw(screen)
@@ -64,15 +64,15 @@ def draw_shop():
         keys = pygame.key.get_pressed()
         if keys[pygame.K_1]:
             ITEM_1_BOUGHT = True
-            inv.add(raba)
+            inv_sprite.add(raba)
             shop_items.remove(item_1)
         elif keys[pygame.K_2]:
             ITEM_2_BOUGHT = True
-            inv.add(stormsurge)
+            inv_sprite.add(stormsurge)
             shop_items.remove(item_2)
         elif keys[pygame.K_3]:
             ITEM_3_BOUGHT = True
-            inv.add(youmuus)
+            inv_sprite.add(youmuus)
             shop_items.remove(item_3)
 
         pygame.display.flip()
