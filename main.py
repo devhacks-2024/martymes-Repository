@@ -11,26 +11,14 @@ from projectile import *
 from item import *
 from shop_setup import *
 from entity_movement import *
-
+from var_setup import *
 
 # Initialize Pygame
 pygame.init()
 
-# Set up the screen
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 720
-INV_HEIGHT_OFFSET = 230
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
 bg = pygame.image.load("assets/bg.png").convert()
-
-player_size = 100
-player_hp = 100
-player_speed = 5
-time_halted = [False, 0]
 
 player = Player(player_size, player_speed, player_hp, (0,0), [player_down(), player_up(), player_left(), player_right()])
 player_attacks = pygame.sprite.Group()#empty
@@ -100,17 +88,7 @@ def draw_shop():
     screen.blit(bg, (0,0))
     pygame.display.flip()
 
-collision_timer = 0
 running = True
-def handle_player_collision():
-    global running
-    global collision_timer
-    if pygame.sprite.spritecollide(player, enemies, dokill=False, collided=None) and collision_timer==0:
-        collision_timer = 50
-        player.take_damage(20)
-        if(player.get_hp()<=0):
-            running = False
-
 # Main game loop
 while running:
     #update enemies location of player
@@ -138,11 +116,9 @@ while running:
     # Draw the square
     draw_sprites()
 
-    #check if touching
-    if(collision_timer>0):
-        collision_timer -= 1
-    else:
-        handle_player_collision()
+    #check if touching only if user has not quit
+    if running:
+        running = handle_player_collision(player, enemies)
 
     # Update the display
     pygame.display.flip()

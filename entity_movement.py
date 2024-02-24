@@ -1,12 +1,13 @@
 import pygame
-from main import SCREEN_WIDTH, SCREEN_HEIGHT, player_size
 from enemy import Enemy
 from projectile import Projectile
 from character_frames import *
+from var_setup import SCREEN_HEIGHT, SCREEN_WIDTH, player_size
 
 pygame.init()
 
 time_wait = 1000
+collision_timer = 0
 
 def handle_movement(player):
     keys = pygame.key.get_pressed()
@@ -40,3 +41,15 @@ def player_attack(player, player_attacks, time_halted):
         player_attacks.add(new_attack)
         time_halted[1] = pygame.time.get_ticks()
         time_halted[0] = True
+
+def handle_player_collision(player, enemies) -> bool:
+    global collision_timer
+    if pygame.sprite.spritecollide(player, enemies, dokill=False, collided=None) and collision_timer==0:
+        collision_timer = 50
+        player.take_damage(20)
+        if(player.get_hp()<=0):
+            return False
+    elif collision_timer > 0:
+        collision_timer -= 1
+    
+    return True
