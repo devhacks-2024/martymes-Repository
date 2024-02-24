@@ -144,31 +144,36 @@ def draw_start_screen() -> bool:
 
 
 WD = 7000
-E= 3
+E= 2
 
 wave = 1
 wave_delay = WD + wave*WD/2
 enemy_amount = E + wave**2*E
 last_wave_spawned = pygame.time.get_ticks()
-
+boss = Small_Enemy(ENEMY_SIZE*5, 2, 3000, 40, (0,0), [boss_right(), boss_left()])
+bossy = True
 running = draw_start_screen()
 # Main game loop
 while running:
     #update enemies location of player
     enemy_ping(enemy_handler.get_enemies(), player.getX(), player.getY())
-
+    print(wave)
   
 
-    if(wave == 5):
+    if(wave == 4) and len(enemy_handler.enemies) == 0:
         draw_win_screen()
 
     #spawn in wave
-    if(last_wave_spawned + wave_delay < pygame.time.get_ticks() and wave <= 4):
+    if(last_wave_spawned + wave_delay < pygame.time.get_ticks() and wave <= 3):
         side = ["right", "left"]
         enemy_handler.create_wave(enemy_amount, random.choice(side))
         wave += 1
         last_wave_spawned = pygame.time.get_ticks()
         wave_delay = WD + wave*WD/2
+
+    if wave == 3 and bossy:
+        enemy_handler.add_boss()
+        bossy = False
 
 
     # Handle events
@@ -218,7 +223,7 @@ while running:
         for the_enemy2 in colliding_sprites:
             if(the_enemy1 != the_enemy2):
 
-                if(wave <= 3):
+                if(wave < 3):
                     if(the_enemy1.getX() > the_enemy2.getX()):
                         the_enemy1.moveX(1)
                     else:

@@ -27,7 +27,8 @@ class Enemy_Spawner(pygame.sprite.Sprite):
             ghoul = Small_Enemy(ENEMY_SIZE+15, speed, random.randint(ENEMY_HP,ENEMY_HP+200), 15, (start_pos_x,start_pos_y), [ghoul_right(), ghoul_left()])
             self.enemies.add(enemy,ghoul)
 
-        boss = Small_Enemy(ENEMY_SIZE*5, 2, 3000, 40, (SCREEN_WIDTH + SPAWN_RANGE, random.randint(0,SCREEN_HEIGHT)), [boss_right(), boss_left()])
+    def add_boss(self):
+        boss = Small_Enemy(ENEMY_SIZE*5, 2, 3000, 40, (0,0), [boss_right(), boss_left()])
         self.enemies.add(boss)
             
     def update(self, screen):
