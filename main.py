@@ -25,16 +25,14 @@ pygame.init()
 def draw_sprites():
     the_player.update()
     attack_handler.update(screen)
-    the_player.draw(screen)
-
     enemy_handler.update(screen)
     effect_engine.update(screen)
     inv.update()
     hp_bar_sprite.update()
 
-    inv.draw(screen)
-
+    inv_sprite.draw(screen)
     hp_bar_sprite.draw(screen)
+    the_player.draw(screen)
 
     
 def draw_shop():

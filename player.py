@@ -60,18 +60,18 @@ class Player(Character):
 
 
     def change_direction(self):
-            if(self.direction.get_direction() == "down"):
-                self.current_animation = self.walking_down
-                self.current_direction = "down"
-            if(self.direction.get_direction() == "up"):
-                self.current_animation = self.walking_up
-                self.current_direction = "up"
-            if(self.direction.get_direction() == "left"):
-                self.current_animation = self.walking_left
-                self.current_direction = "left"
-            if(self.direction.get_direction() == "right"):
-                self.current_animation = self.walking_right
-                self.current_direction = "right"
+        if(self.direction.get_direction() == "down"):
+            self.current_animation = self.walking_down
+            self.current_direction = "down"
+        if(self.direction.get_direction() == "up"):
+            self.current_animation = self.walking_up
+            self.current_direction = "up"
+        if(self.direction.get_direction() == "left"):
+            self.current_animation = self.walking_left
+            self.current_direction = "left"
+        if(self.direction.get_direction() == "right"):
+            self.current_animation = self.walking_right
+            self.current_direction = "right"
 
     def update(self):
         #dont change state if hes attacking
