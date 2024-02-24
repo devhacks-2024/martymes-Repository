@@ -9,8 +9,8 @@ class Player(Character):
         super().__init__(size, speed, hp, starting_pos, idle_animation)#down up left right
         self.direction = Player_Direction("down")
         self.current_direction = "down"
-        self.walking_down = self.render_image( player_down(), size)
-        self.walking_up = self.render_image( player_up(), size)
+        self.walking_down = self.render_image(player_down(), size)
+        self.walking_up = self.render_image(player_up(), size)
         self.walking_left = self.render_image(player_left(), size)
         self.walking_right = self.render_image(player_right(), size)
 
@@ -27,7 +27,6 @@ class Player(Character):
         # need damage taking stuff to keep track
         self.taking_damage = -MAX_DAMAGE_TIME
         
-
     def get_damage(self):
         return self.damage
     

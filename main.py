@@ -23,13 +23,16 @@ pygame.init()
 def draw_sprites():
     the_player.update()
     player_attacks.update()
-    the_player.draw(screen)
     enemies.update()
     effect_engine.update(screen)
-    enemies.draw(screen)
     inv.update()
+    hp_bar_sprite.update()
+
+    enemies.draw(screen)
     inv.draw(screen)
     player_attacks.draw(screen)
+    the_player.draw(screen)
+    hp_bar_sprite.draw(screen)
     
 def draw_shop():
     global ITEM_1_BOUGHT
@@ -157,7 +160,7 @@ while running:
 
     #check if touching only if user has not quit
     if running:
-        running = handle_player_collision(player, enemies)
+        running = handle_player_collision(player, hp_bar, enemies)
         if not running:
             draw_loss_screen()
 
