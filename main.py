@@ -24,6 +24,23 @@ player = character(player_size, player_speed)
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
+def handle_movement():
+    global square_x
+    global square_y
+    keys = pygame.key.get_pressed()
+    if square_x > 0:
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+            player.moveX(-1)
+    if square_x < SCREEN_WIDTH - square_size:
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+            player.moveX(1)
+    if square_y > 0:
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
+            player.moveY(-1)
+    if square_y < SCREEN_HEIGHT - square_size:
+        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+            player.moveY(1)
+
 # Main game loop
 running = True
 while running:
@@ -32,19 +49,11 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # Handle player input
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-        player.moveX(-1)
-    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-        player.moveX(1)
-    if keys[pygame.K_UP] or keys[pygame.K_w]:
-       player.moveY(-1)
-    if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-        player.moveY(1)
-
     # Clear the screen
     screen.fill(BLACK)
+
+    # Handle player input
+    handle_movement()
 
     # Draw the square
     all_sprites.update()
