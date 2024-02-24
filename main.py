@@ -144,11 +144,11 @@ def draw_start_screen() -> bool:
 
 
 WD = 7000
-E= 2
+E= 3
 
 wave = 1
 wave_delay = WD + wave*WD/2
-enemy_amount = E + wave**2*E
+enemy_amount = E + wave*5*E
 last_wave_spawned = pygame.time.get_ticks()
 boss = Small_Enemy(ENEMY_SIZE*5, 2, 3000, 40, (0,0), [boss_right(), boss_left()])
 bossy = True
