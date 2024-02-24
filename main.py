@@ -4,6 +4,7 @@ import sys
 from character import *
 from enemy import *
 from inventory import *
+from item import *
 
 
 # Initialize Pygame
@@ -25,9 +26,9 @@ player = character(player_size, player_speed, (0,0))
 the_player = pygame.sprite.Group()
 the_player.add(player)
 
-inv_sprite = Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 170))
-inv = pygame.sprite.Group(inv_sprite)
-
+inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 170)))
+raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 170), "assets/raba.png", 120, 0, 25)
+items = pygame.sprite.Group(raba)
 
 enemies = pygame.sprite.Group()
 enemy1 = enemy(player_size, player_speed-4, (300, 400))
@@ -50,12 +51,14 @@ def handle_movement():
             player.moveY(1)
 
 def draw_sprites():
-    enemies.update()
     the_player.update()
-    inv.update()
     the_player.draw(screen)
+    enemies.update()
     enemies.draw(screen)
+    inv.update()
     inv.draw(screen)
+    items.update()
+    items.draw(screen)
 
 def enemy_ping(enemies, x, y):
     for e in enemies.sprites():
