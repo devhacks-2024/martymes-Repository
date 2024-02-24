@@ -113,7 +113,8 @@ def draw_win_screen():
         screenW2.draw(win_screen)
         pygame.display.flip()
 
-def draw_start_screen():
+def draw_start_screen() -> bool:
+    start = True
     start_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('why play, press enter to start')
 
@@ -126,15 +127,17 @@ def draw_start_screen():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     running = False
+            if event.type == pygame.QUIT:
+                start = False
+                running = False
 
     pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
     screen.blit(bg, (0,0))
     pygame.display.flip()
+    return start
 
-draw_start_screen()
-
-running = True
+running = draw_start_screen()
 # Main game loop
 while running:
     #update enemies location of player

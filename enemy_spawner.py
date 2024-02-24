@@ -9,11 +9,9 @@ class Enemy_Spawner(pygame.sprite.Sprite):
     def __init__(self) -> None:
         self.enemies = pygame.sprite.Group()
         self.idle_basic_enemy = player_down()
-                                 
         
     def get_enemies(self):
         return self.enemies
-    
 
     def create_wave(self, amount, side):
         if(side == "right"):
