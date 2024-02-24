@@ -34,7 +34,6 @@ time_halted = [False, 0]
 time_wait = 1000
 
 
-
 # setup item shop assets and whatnot
 font = pygame.font.Font(None, 36)
 item_1 = pygame.sprite.Sprite()
@@ -130,8 +129,12 @@ def draw_shop():
     
     running = True
     while running:
-        if pygame.key.get_pressed()[pygame.K_TAB]:
-            running = False
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_TAB:
+                    running = False
+            elif event.type == pygame.QUIT:
+                running = False
 
         shop_screen.fill(BLACK)
         if not ITEM_1_BOUGHT:
@@ -154,10 +157,14 @@ def draw_shop():
             shop_items.remove(item_2)
 
         pygame.display.flip()
+        pygame.time.Clock().tick(60)
+
+        
     
     pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
     screen.blit(bg, (0,0))
+    pygame.display.flip()
 
 collision_timer = 0
 running = True
@@ -179,6 +186,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_TAB:
+                draw_shop()
 
     # Clear the screend
     screen.blit(bg, (0,0))
@@ -190,10 +200,6 @@ while running:
         player_attack(player, player_attacks, time_halted)
     else: 
         check_halt(time_halted)
-
-    # Check if shop opened
-    if(pygame.key.get_pressed()[pygame.K_TAB]):
-        draw_shop()
 
     # Draw the square
     draw_sprites()
