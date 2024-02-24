@@ -10,19 +10,28 @@ from inventory import Inventory
 from enemy import Enemy
 from enemy_spawner import Enemy_Spawner
 from small_enemy import Small_Enemy
+
+from attack_handler import*
+
 from hp_bar import Hp_Bar
 
+
 pygame.init()
+
+
+
+
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
 bg = pygame.image.load("assets/bg.png").convert()
 
 player = Player(player_size, player_speed, player_hp, (0,0), player_down())
-player_attacks = pygame.sprite.Group()#empty
 
 the_player = pygame.sprite.Group()
 the_player.add(player)
+
+attack_handler = Attack_Handler(player)
 
 effect_engine = Effect_Engine()
 

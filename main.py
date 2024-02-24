@@ -18,21 +18,24 @@ from var_setup import *
 from enemy_spawner import *
 from entity_setup import *
 
+
 # Initialize Pygame
 pygame.init()
 
 def draw_sprites():
     the_player.update()
-    player_attacks.update()
+    attack_handler.update(screen)
+    the_player.draw(screen)
+
     enemy_handler.update(screen)
     effect_engine.update(screen)
     inv.update()
     hp_bar_sprite.update()
 
     inv.draw(screen)
-    player_attacks.draw(screen)
-    the_player.draw(screen)
+
     hp_bar_sprite.draw(screen)
+
     
 def draw_shop():
     global ITEM_1_BOUGHT
@@ -155,7 +158,7 @@ while running:
         # Handle player input
         handle_movement(player)
         #Handle player attack
-        player_attack(player, player_attacks, time_halted)
+        attack_handler.player_attack( time_halted)
     else: 
         check_halt(time_halted)
     # Draw the square
@@ -168,13 +171,16 @@ while running:
             draw_loss_screen()
 
     #check if attack touch enemy
-    collisions = pygame.sprite.groupcollide(player_attacks, enemy_handler.get_enemies(), True, False)
+    collisions = pygame.sprite.groupcollide(attack_handler.get_attacks(), enemy_handler.get_enemies(), False, False)
     for attack_projectile, colliding_sprites in collisions.items():
         for the_enemy in colliding_sprites:
+            attack_projectile.explode()
+
             the_enemy.take_damage(attack_projectile.get_damage())
             if(the_enemy.is_dead()):
                 #player size is the_enemy bc same sprite
                 effect_engine.enemy_death((the_enemy.getX() + player_size//2, the_enemy.getY()+ player_size//2))
+
 
     #pushing the enemies so no collisions
     collisions = pygame.sprite.groupcollide(enemy_handler.get_enemies(), enemy_handler.get_enemies(), False, False)
