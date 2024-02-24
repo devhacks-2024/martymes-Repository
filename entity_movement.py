@@ -2,11 +2,11 @@ import pygame
 from enemy import Enemy
 from projectile import Projectile
 from character_frames import *
-from var_setup import SCREEN_HEIGHT, SCREEN_WIDTH, player_size
+from var_setup import SCREEN_HEIGHT, SCREEN_WIDTH, player_size, DEFAULT_ATTACK_WAIT
 
 pygame.init()
 
-time_wait = 1000
+
 collision_timer = 0
 
 def handle_movement(player):
@@ -30,7 +30,7 @@ def enemy_ping(enemies, x, y):
             e.player_location(x, y)
 
 def check_halt(halt_player):
-    if(halt_player[1] + time_wait < pygame.time.get_ticks()):
+    if(halt_player[1] + DEFAULT_ATTACK_WAIT < pygame.time.get_ticks()):
         halt_player[0] = False
 
 def player_attack(player, player_attacks, time_halted):
