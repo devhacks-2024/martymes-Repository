@@ -43,17 +43,16 @@ def draw_shop():
     global ITEM_3_BOUGHT
     shop_screen = pygame.display.set_mode((900, 500))
     pygame.display.set_caption('Buy Menu')
+
+    
     
     running = True
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_TAB:
-                    running = False
-            elif event.type == pygame.QUIT:
-                running = False
-
         shop_screen.fill(BLACK)
+        points = font.render("Points: "+str(player.get_points()), True, WHITE)
+        points_rect = points.get_rect()
+        points_rect.center = (700, 450)
+        shop_screen.blit(points, points_rect)
         if not ITEM_1_BOUGHT:
             shop_screen.blit(num_1, num_1_rect)
         if not ITEM_2_BOUGHT:
@@ -63,19 +62,27 @@ def draw_shop():
         shop_items.update()
         shop_items.draw(shop_screen)
 
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_1]:
-            ITEM_1_BOUGHT = True
-            inv.add(raba)
-            shop_items.remove(item_1)
-        elif keys[pygame.K_2]:
-            ITEM_2_BOUGHT = True
-            inv.add(stormsurge)
-            shop_items.remove(item_2)
-        elif keys[pygame.K_3]:
-            ITEM_3_BOUGHT = True
-            inv.add(youmuus)
-            shop_items.remove(item_3)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_TAB:
+                    running = False
+                elif event.key == pygame.K_1 and player.get_points()>=15:
+                    player.remove_points(15)
+                    ITEM_1_BOUGHT = True
+                    inv.add(raba)
+                    shop_items.remove(item_1)
+                elif event.key == pygame.K_2 and player.get_points()>=30:
+                    player.remove_points(30)
+                    ITEM_2_BOUGHT = True
+                    inv.add(stormsurge)
+                    shop_items.remove(item_2)
+                elif event.key == pygame.K_3 and player.get_points()>=40:
+                    player.remove_points(40)
+                    ITEM_3_BOUGHT = True
+                    inv.add(youmuus)
+                    shop_items.remove(item_3)
+            elif event.type == pygame.QUIT:
+                running = False
 
         pygame.display.flip()
         pygame.time.Clock().tick(60)
@@ -178,6 +185,7 @@ while running:
 
             the_enemy.take_damage(attack_projectile.get_damage())
             if(the_enemy.is_dead()):
+                player.add_point()
                 #player size is the_enemy bc same sprite
                 effect_engine.enemy_death((the_enemy.getX() + player_size//2, the_enemy.getY()+ player_size//2))
 

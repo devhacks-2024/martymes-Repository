@@ -24,7 +24,7 @@ class Enemy_Spawner(pygame.sprite.Sprite):
             speed = random.choice(ENEMY_SPEED)
             #enemy = Enemy(ENEMY_SIZE, speed, ENEMY_HP, (start_pos_x,start_pos_y), self.idle_basic_enemy)
             enemy = Enemy(ENEMY_SIZE, speed, ENEMY_HP, (start_pos_x,start_pos_y), self.idle_basic_enemy)
-            ghoul = Small_Enemy(ENEMY_SIZE, speed, 20, (start_pos_x,start_pos_y), [ghoul_right(), ghoul_left()])
+            ghoul = Small_Enemy(ENEMY_SIZE+10, speed, ENEMY_HP+20, (start_pos_x,start_pos_y), [ghoul_right(), ghoul_left()])
             self.enemies.add(enemy,ghoul)
             
     def update(self, screen):
