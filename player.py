@@ -1,14 +1,19 @@
 from character import *
+MAX_DAMAGE_TIME = 400
 class Player(Character):
     
-    def __init__(self, size, speed, starting_pos, idle_animation):
-        super().__init__(size, speed, starting_pos, idle_animation[0])#down up left right
+    def __init__(self, size, speed, hp, starting_pos, idle_animation):
+        super().__init__(size, speed, hp, starting_pos, idle_animation[0])#down up left right
         self.direction = Player_Direction()
         self.current_direction = "down"
         self.walking_down = self.render_image( idle_animation[0], size)
         self.walking_up = self.render_image(idle_animation[1], size)
         self.walking_left = self.render_image(idle_animation[2], size)
         self.walking_right = self.render_image(idle_animation[3], size)
+
+        # need damage taking stuff to keep track
+        self.taking_damage = -MAX_DAMAGE_TIME
+        
 
     def moveX(self, move):
         if(move <= 0):
@@ -26,8 +31,6 @@ class Player(Character):
 
     
     def update(self):
-        
-
         if(self.direction.get_direction() != self.current_direction):
             if(self.direction.get_direction() == "down"):
                 self.current_animation = self.walking_down
@@ -46,6 +49,13 @@ class Player(Character):
         if current_time - self.last_animation_time > self.current_animation_speed:
             self.current_animation_index = (self.current_animation_index + 1) % len(self.current_animation)
             self.image = self.current_animation[self.current_animation_index]
+
+            if self.taking_damage + MAX_DAMAGE_TIME > pygame.time.get_ticks():
+                red_tint = (255, 0, 0)  # Red color
+                tinted_image = self.image.copy()  # Make a copy of the original image
+                tinted_image.fill(red_tint, special_flags=pygame.BLEND_MULT)  # Tint the copied image red
+                self.image = tinted_image
+            
             self.last_animation_time = current_time
 
 class Player_Direction:
@@ -79,6 +89,3 @@ class Player_Direction:
             return "left" 
         if(self.right):
             return "right" 
-
-
-        

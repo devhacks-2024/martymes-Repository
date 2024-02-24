@@ -14,8 +14,9 @@ from item import *
 pygame.init()
 
 # Set up the screen
-SCREEN_WIDTH = 1920
-SCREEN_HEIGHT = 1080
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+INV_HEIGHT_OFFSET = 230
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
@@ -24,9 +25,10 @@ pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
 bg = pygame.image.load("assets/bg.png").convert()
 
 player_size = 100
+player_hp = 100
 player_speed = 5
 
-
+# setup item shop assets and whatnot
 font = pygame.font.Font(None, 36)
 item_1 = pygame.sprite.Sprite()
 item_1.image = pygame.image.load("assets/raba.png").convert_alpha()
@@ -53,17 +55,17 @@ ITEM_1_BOUGHT = False
 ITEM_2_BOUGHT = False
 ITEM_3_BOUGHT = False
 
-player = Player(player_size, player_speed, (0,0), [player_down(), player_up(), player_right(), player_left()])
+player = Player(player_size, player_speed, player_hp, (0,0), [player_down(), player_up(), player_right(), player_left()])
 
 the_player = pygame.sprite.Group()
 the_player.add(player)
 
-inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400)))
-raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400), "assets/raba.png", 120, 0, 25)
-stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400), "assets/stormsurge.png" , 90, 0, 10)
+inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET)))
+raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/raba.png", 120, 0, 25)
+stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/stormsurge.png" , 90, 0, 10)
 
 enemies = pygame.sprite.Group()
-enemy1 = Enemy(player_size, player_speed-4, (300, 400), player_down())
+enemy1 = Enemy(player_size, player_speed-4, player_hp, (300, 400), player_down())
 enemies.add(enemy1)
 
 def handle_movement():
@@ -134,8 +136,20 @@ def draw_shop():
     pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
     screen.blit(bg, (0,0))
 
-# Main game loop
+collision_timer = 0
 running = True
+def handle_collision():
+    global running
+    global collision_timer
+    if pygame.sprite.spritecollide(player, enemies, dokill=False, collided=None) and collision_timer==0:
+        collision_timer = 50
+        player.take_damage(20)
+        if(player.get_hp()<0):
+            running = False
+
+
+
+# Main game loop
 while running:
     #update enemies location of player
     enemy_ping(enemies, player.getX(), player.getY())
@@ -145,7 +159,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # Clear the screen
+    # Clear the screend
     screen.blit(bg, (0,0))
     
     # Check if shop opened
@@ -159,7 +173,10 @@ while running:
     draw_sprites()
 
     #check if touching
-    colliding_sprites = pygame.sprite.spritecollide(player, enemies, dokill=True, collided=None)
+    if(collision_timer>0):
+        collision_timer -= 1
+    else:
+        handle_collision()
 
     # Update the display
     pygame.display.flip()

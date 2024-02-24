@@ -1,7 +1,7 @@
 import pygame
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, size, speed, starting_pos, idle_animation):
+    def __init__(self, size, speed, hp, starting_pos, idle_animation):
         super().__init__()
         # Load and scale player images for walking animation
 
@@ -14,14 +14,13 @@ class Character(pygame.sprite.Sprite):
         # Define size and speed attributes
         self.square_size = size
         self.square_speed = speed
+        self.hp = hp
         
         # Walking animation attributes
         self.current_animation = scaled_pictures
         self.current_animation_index = 0
         self.current_animation_speed = 100 # Speed of animation change
         self.last_animation_time = pygame.time.get_ticks()
-
-
         
     def render_image(self, idle_animation, size):
         loaded_pictures = []
@@ -53,6 +52,13 @@ class Character(pygame.sprite.Sprite):
 
     def get_height(self) -> int:
         return self.rect.height
+    
+    def get_hp(self) -> int:
+        return self.hp
+    
+    def take_damage(self, damage):
+        self.taking_damage = pygame.time.get_ticks()
+        self.hp -= damage
         
     def update(self):
         # Update walking animation
@@ -61,10 +67,3 @@ class Character(pygame.sprite.Sprite):
             self.current_animation_index = (self.current_animation_index + 1) % len(self.current_animation)
             self.image = self.current_animation[self.current_animation_index]
             self.last_animation_time = current_time
-
-        
-        # Tint the image red - for damage
-        # red_tint = (255, 0, 0)  # Red color
-        # tinted_image = self.image.copy()  # Make a copy of the original image
-        # tinted_image.fill(red_tint, special_flags=pygame.BLEND_MULT)  # Tint the copied image red
-        # self.image = tinted_image
