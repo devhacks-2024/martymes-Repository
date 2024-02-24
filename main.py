@@ -27,12 +27,11 @@ enemy_handler.create_wave(30, "right")
 def draw_sprites():
     the_player.update()
     player_attacks.update()
-    enemies.update()
+    enemy_handler.update(screen)
     effect_engine.update(screen)
     inv.update()
     hp_bar_sprite.update()
 
-    enemies.draw(screen)
     inv.draw(screen)
     player_attacks.draw(screen)
     the_player.draw(screen)
