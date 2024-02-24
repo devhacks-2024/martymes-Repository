@@ -1,5 +1,7 @@
 # setup item shop assets and whatnot
 import pygame
+from var_setup import SCREEN_HEIGHT, SCREEN_WIDTH
+from entity_setup import player
 pygame.init()
 WHITE = (255, 255, 255)
 

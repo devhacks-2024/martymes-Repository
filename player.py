@@ -24,11 +24,22 @@ class Player(Character):
 
         self.damage = 25
         self.is_attacking = [False, 0]
+        self.finish_attack = False
+        self.points = 0
         self.is_freeze = False
 
         # need damage taking stuff to keep track
         self.taking_damage = -MAX_DAMAGE_TIME
         
+    def add_point(self):
+        self.points += 1
+    
+    def remove_points(self, remove):
+        self.points -= remove
+
+    def get_points(self):
+        return self.points
+
     def get_damage(self):
         return self.damage
     
