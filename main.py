@@ -64,17 +64,17 @@ def draw_shop():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_TAB:
                     running = False
-                elif event.key == pygame.K_1 and player.get_points()>=15:
+                elif event.key == pygame.K_1 and player.get_points()>=15 and not inv.has(raba):
                     player.remove_points(15)
                     ITEM_1_BOUGHT = True
                     inv.add(raba)
                     shop_items.remove(item_1)
-                elif event.key == pygame.K_2 and player.get_points()>=30:
+                elif event.key == pygame.K_2 and player.get_points()>=30 and not inv.has(stormsurge):
                     player.remove_points(30)
                     ITEM_2_BOUGHT = True
                     inv.add(stormsurge)
                     shop_items.remove(item_2)
-                elif event.key == pygame.K_3 and player.get_points()>=40:
+                elif event.key == pygame.K_3 and player.get_points()>=40 and not inv.has(youmuus):
                     player.remove_points(40)
                     ITEM_3_BOUGHT = True
                     inv.add(youmuus)
