@@ -29,3 +29,8 @@ def projectile_right():
 
 def enemy_death():
     return ["assets/enemy_explode1.png","assets/enemy_explode2.png","assets/enemy_explode3.png","assets/enemy_explode4.png"]
+
+def ghoul_right():
+    return ["assets/ghoul-walking1-r.png","assets/ghoul-walking2-r.png","assets/ghoul-walking3-r.png","assets/ghoul-walking4-r.png"]
+def ghoul_left():
+    return ["assets/ghoul-walking1-l.png","assets/ghoul-walking2-l.png","assets/ghoul-walking3-l.png","assets/ghoul-walking4-l.png"] 
