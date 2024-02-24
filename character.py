@@ -33,6 +33,18 @@ class character(pygame.sprite.Sprite):
     def moveY(self, move):
         self.rect.y += move * self.square_speed
 
+    def getX(self) -> int:
+        return self.rect.x
+
+    def getY(self) -> int:
+        return self.rect.y
+    
+    def get_width(self) -> int:
+        return self.rect.width
+
+    def get_height(self) -> int:
+        return self.rect.height
+        
     def update(self):
         # Update walking animation
         current_time = pygame.time.get_ticks()

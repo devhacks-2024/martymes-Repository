@@ -25,19 +25,18 @@ all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
 def handle_movement():
-    global square_x
-    global square_y
+    global player
     keys = pygame.key.get_pressed()
-    if square_x > 0:
+    if  player.getX() > 0:
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             player.moveX(-1)
-    if square_x < SCREEN_WIDTH - square_size:
+    if player.getX() < SCREEN_WIDTH - player.get_width():
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             player.moveX(1)
-    if square_y > 0:
+    if player.getY() > 0:
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             player.moveY(-1)
-    if square_y < SCREEN_HEIGHT - square_size:
+    if player.getY() < SCREEN_HEIGHT - player.get_height():
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             player.moveY(1)
 
