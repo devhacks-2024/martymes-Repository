@@ -158,7 +158,8 @@ while running:
         # Handle player input
         handle_movement(player)
         #Handle player attack
-        attack_handler.player_attack( time_halted)
+        attack_handler.player_attack(time_halted)
+        attack_handler.player_freeze(time_halted, enemy_handler.get_enemies(), inv.has(raba))
     else: 
         check_halt(time_halted)
     # Draw the square
@@ -187,16 +188,18 @@ while running:
     for the_enemy1, colliding_sprites in collisions.items():
         for the_enemy2 in colliding_sprites:
             if(the_enemy1 != the_enemy2):
-                # if(the_enemy1.getX() > the_enemy2.getX()):
-                #     the_enemy1.moveX(1)
-                # else:
-                #     the_enemy1.moveX(-1)
-                # if(the_enemy1.getY() > the_enemy2.getY()):
-                #     the_enemy1.moveY(1)
-                # else:
-                #     the_enemy1.moveY(-1)
-                the_enemy1.moveX(random.uniform(-3.0, 3.0))
-                the_enemy1.moveY(random.uniform(-3.0, 3.0))
+                if(the_enemy1.getX() > the_enemy2.getX()):
+                    the_enemy1.moveX(1)
+                else:
+                    the_enemy1.moveX(-1)
+                if(the_enemy1.getY() > the_enemy2.getY()):
+                    the_enemy1.moveY(1)
+                else:
+                    the_enemy1.moveY(-1)
+
+                #funny movement lol
+                # the_enemy1.moveX(random.uniform(-3.0, 3.0))
+                # the_enemy1.moveY(random.uniform(-3.0, 3.0))
 
     # Update the display
     pygame.display.flip()
