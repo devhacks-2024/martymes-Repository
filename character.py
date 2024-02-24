@@ -38,7 +38,6 @@ class Character(pygame.sprite.Sprite):
 
         return scaled_pictures
 
-
     def moveX(self, move):
         self.rect.x += move * self.square_speed
         

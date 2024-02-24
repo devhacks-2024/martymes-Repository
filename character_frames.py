@@ -1,5 +1,3 @@
-
-
 def player_down():
     return ["assets/player_down1.png","assets/player_down2.png"]
 def player_up():
@@ -34,3 +32,6 @@ def ghoul_right():
     return ["assets/ghoul-walking1-r.png","assets/ghoul-walking2-r.png","assets/ghoul-walking3-r.png","assets/ghoul-walking4-r.png"]
 def ghoul_left():
     return ["assets/ghoul-walking1-l.png","assets/ghoul-walking2-l.png","assets/ghoul-walking3-l.png","assets/ghoul-walking4-l.png"] 
+
+def hp_bar_assets():
+    return ["assets/100.png","assets/90.png","assets/80.png","assets/70.png","assets/60.png","assets/50.png","assets/40.png","assets/30flash.png","assets/30.png","assets/20flash.png","assets/20.png","assets/10flash.png","assets/10.png"]
