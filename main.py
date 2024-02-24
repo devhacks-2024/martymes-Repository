@@ -16,13 +16,18 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Movable Square")
 
 player_size = 100
-player_colour = WHITE
 player_speed = 5
 player = character(player_size, player_speed)
+
+
+enemy = character(player_size, player_speed-2)
+
 
 #create a sprite group
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
+all_sprites.add(enemy)
+
 
 def handle_movement():
     global player
