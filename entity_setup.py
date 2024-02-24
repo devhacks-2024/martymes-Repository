@@ -46,9 +46,9 @@ player = Player(player_size, player_speed, player_hp, (0,0), player_down())
 the_player = pygame.sprite.Group()
 the_player.add(player)
 
-attack_handler = Attack_Handler(player)
 
 effect_engine = Effect_Engine()
+attack_handler = Attack_Handler(player, effect_engine)
 
 inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET)))
 raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/raba.png")

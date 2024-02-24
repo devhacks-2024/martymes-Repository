@@ -10,6 +10,12 @@ class Effect_Engine(pygame.sprite.Sprite):
         self.enemy_death_animation = enemy_death() 
         enemy_death_animation_size = 250
         self.enemy_death_animation = self.render_image(self.enemy_death_animation, enemy_death_animation_size)#size
+        
+        
+        self.bone_effect_animation = freeze_effect()
+        bone_effect_size = 100
+        self.bone_effect_animation = self.render_image(self.bone_effect_animation, bone_effect_size)
+        
         self.current_effects = pygame.sprite.Group()
         #create group
 
@@ -28,10 +34,14 @@ class Effect_Engine(pygame.sprite.Sprite):
     
 
     def enemy_death(self, start_pos):
-
         death_animation_speed = 150
         death_animation = Effects(start_pos, death_animation_speed, self.enemy_death_animation)
         self.current_effects.add(death_animation)
+
+    def bone_effect(self, start_pos):
+        bone_animation_speed = 200
+        bone_animation = Effects(start_pos, bone_animation_speed, self.bone_effect_animation)
+        self.current_effects.add(bone_animation)
 
     def update(self, screen) -> None:
         self.current_effects.update()
