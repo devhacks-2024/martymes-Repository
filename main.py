@@ -21,6 +21,7 @@ BLACK = (0, 0, 0)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
+bg = pygame.image.load("assets/bg.png").convert()
 
 player_size = 100
 player_speed = 5
@@ -131,6 +132,7 @@ def draw_shop():
     
     pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
+    screen.blit(bg, (0,0))
 
 # Main game loop
 running = True
@@ -144,7 +146,7 @@ while running:
             running = False
 
     # Clear the screen
-    screen.fill(BLACK)
+    screen.blit(bg, (0,0))
     
     # Check if shop opened
     if(pygame.key.get_pressed()[pygame.K_TAB]):

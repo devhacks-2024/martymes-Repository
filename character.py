@@ -68,4 +68,3 @@ class Character(pygame.sprite.Sprite):
         # tinted_image = self.image.copy()  # Make a copy of the original image
         # tinted_image.fill(red_tint, special_flags=pygame.BLEND_MULT)  # Tint the copied image red
         # self.image = tinted_image
-
