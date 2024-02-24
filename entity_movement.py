@@ -1,6 +1,5 @@
 import pygame
 from enemy import Enemy
-from projectile import Projectile
 from character_frames import *
 from var_setup import SCREEN_HEIGHT, SCREEN_WIDTH, player_size, DEFAULT_ATTACK_WAIT
 

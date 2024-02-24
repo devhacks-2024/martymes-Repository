@@ -58,7 +58,6 @@ class Player(Character):
         if(self.direction.get_direction() == "right"):
             self.current_animation = self.attacking_right
 
-
     def change_direction(self):
         if(self.direction.get_direction() == "down"):
             self.current_animation = self.walking_down
