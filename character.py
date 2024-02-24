@@ -55,6 +55,7 @@ class character(pygame.sprite.Sprite):
             self.image = self.walk_animation_frames[self.walk_animation_index]
             self.last_animation_time = current_time
 
+        
         # Tint the image red - for damage
         # red_tint = (255, 0, 0)  # Red color
         # tinted_image = self.image.copy()  # Make a copy of the original image
