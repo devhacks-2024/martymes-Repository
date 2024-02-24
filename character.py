@@ -1,7 +1,7 @@
 import pygame
 
 class character(pygame.sprite.Sprite):
-    def __init__(self, size, speed):
+    def __init__(self, size, speed, starting_pos):
         super().__init__()
         # Load and scale player images for walking animation
         self.image_walk1 = pygame.image.load("assets/player1.png").convert_alpha()
@@ -14,7 +14,7 @@ class character(pygame.sprite.Sprite):
         # Set up initial image and rect
         self.image = self.image_walk1
         self.rect = self.image.get_rect()
-        self.rect.center = (400, 300)  # Initial position at the center of the screen
+        self.rect.center = starting_pos # Initial position at the center of the screen
         
         # Define size and speed attributes
         self.square_size = size
