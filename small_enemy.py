@@ -26,7 +26,6 @@ class Small_Enemy(Enemy):
   def update(self):
     super().update()
 
-    print(self.direction.get_direction())
     if(self.direction.get_direction() != self.current_direction):
       if(self.direction.get_direction() == "left"):
         self.current_animation = self.walking_left

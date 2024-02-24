@@ -6,7 +6,7 @@ MAX_DAMAGE_TIME = 400
 class Player(Character):
     
     def __init__(self, size, speed, hp, starting_pos, idle_animation):
-        super().__init__(size, speed, hp, starting_pos, idle_animation[0])#down up left right
+        super().__init__(size, speed, hp, starting_pos, idle_animation)#down up left right
         self.direction = Player_Direction("down")
         self.current_direction = "down"
         self.walking_down = self.render_image( player_down(), size)
