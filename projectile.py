@@ -3,17 +3,19 @@ from character import *
 
 class Projectile(Character):
     
-    def __init__(self, start_pos, direction, animations) -> None:
+    def __init__(self, start_pos, damage, direction, animations) -> None:
         self.size = 100
         self.speed = 5
         self.direction = direction
         animation = self.projectile_direction(direction, animations)#down up left right
-
         super().__init__(self.size, self.speed, 0, start_pos, animation)
         
+        self.damage = damage
         self.current_animation_speed = 500
         self.alive_time = 0
    
+    def get_damage(self):
+        return self.damage
     
     def projectile_direction(self, direction, animations):
         if(direction == "down"):
@@ -27,8 +29,6 @@ class Projectile(Character):
         
     def update(self):
         current_time = pygame.time.get_ticks()
-
-            
         if(self.direction == "down"):
             self.moveY(1)
         if(self.direction == "up"):
@@ -39,7 +39,6 @@ class Projectile(Character):
             self.moveX(-1)
 
         if current_time - self.last_animation_time > self.current_animation_speed:
-            
             self.alive_time = self.alive_time + 1
             self.current_animation_index = (self.current_animation_index + 1) % len(self.current_animation)
             self.image = self.current_animation[self.current_animation_index]

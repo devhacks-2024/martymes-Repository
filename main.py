@@ -9,6 +9,7 @@ from character_frames import *
 from inventory import *
 from projectile import *
 from item import *
+from effect_engine import *
 from shop_setup import *
 from entity_movement import *
 from var_setup import *
@@ -26,6 +27,8 @@ player_attacks = pygame.sprite.Group()#empty
 the_player = pygame.sprite.Group()
 the_player.add(player)
 
+effect_engine = Effect_Engine()
+
 inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET)))
 raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/raba.png", 120, 0, 25)
 stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/stormsurge.png" , 90, 0, 10)
@@ -34,15 +37,41 @@ enemies = pygame.sprite.Group()
 enemy1 = Enemy(player_size, player_speed-4, player_hp, (300, 400), player_down())
 enemies.add(enemy1)
 
+def player_attack(player, player_attacks, time_halted):
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_p] or keys[pygame.K_SPACE] and not time_halted[0]:
+
+        new_attack = Projectile((player.getX() + player_size//2, player.getY() + player_size//2), player.get_damage() ,player.get_direction(), [projectile_down(), projectile_up(), projectile_left(), projectile_right()])
+        player_attacks.add(new_attack)
+        time_halted[1] = pygame.time.get_ticks()
+        time_halted[0] = True
+
+def handle_movement(player):
+    keys = pygame.key.get_pressed()
+    if  player.getX() > 0:
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+            player.moveX(-1)
+    if player.getX() < SCREEN_WIDTH - player.get_width():
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+            player.moveX(1)
+    if player.getY() > 0:
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
+            player.moveY(-1)
+    if player.getY() < SCREEN_HEIGHT - player.get_height():
+        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+            player.moveY(1)
+
 def draw_sprites():
     the_player.update()
     player_attacks.update()
     the_player.draw(screen)
     enemies.update()
+    effect_engine.update(screen)
     enemies.draw(screen)
     inv.update()
     inv.draw(screen)
     player_attacks.draw(screen)
+    
 
 def draw_shop():
     global ITEM_1_BOUGHT
@@ -161,7 +190,6 @@ while running:
         player_attack(player, player_attacks, time_halted)
     else: 
         check_halt(time_halted)
-
     # Draw the square
     draw_sprites()
 
@@ -170,6 +198,15 @@ while running:
         running = handle_player_collision(player, enemies)
         if not running:
             draw_loss_screen()
+
+    #check if attack touch enemy
+    collisions = pygame.sprite.groupcollide(player_attacks, enemies, True, False)
+    for attack_projectile, colliding_sprites in collisions.items():
+        for the_enemy in colliding_sprites:
+            the_enemy.take_damage(attack_projectile.get_damage())
+            if(the_enemy.is_dead()):
+                #player size is the_enemy bc same sprite
+                effect_engine.enemy_death((the_enemy.getX() + player_size//2, the_enemy.getY()+ player_size//2))
 
     # Update the display
     pygame.display.flip()
