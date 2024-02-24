@@ -62,8 +62,25 @@ ITEM_1_BOUGHT = False
 ITEM_2_BOUGHT = False
 ITEM_3_BOUGHT = False
 
-player = Player(player_size, player_speed, player_hp, (0,0), [player_down(), player_up(), player_left(), player_right()])
+screenL = pygame.sprite.Sprite()
+screenL.image = pygame.image.load("assets/loss_screen.png")
+screenL.rect = screenL.image.get_rect()
 
+screenL2 = pygame.sprite.Group(screenL)
+
+screenW = pygame.sprite.Sprite()
+screenW.image = pygame.image.load("assets/win_screen.png")
+screenW.rect = screenW.image.get_rect()
+
+screenW2 = pygame.sprite.Group(screenW)
+
+screenS = pygame.sprite.Sprite()
+screenS.image = pygame.image.load("assets/start_screen.png")
+screenS.rect = screenS.image.get_rect()
+
+screenS2 = pygame.sprite.Group(screenS)
+
+player = Player(player_size, player_speed, player_hp, (0,0), [player_down(), player_up(), player_left(), player_right()])
 
 player_attacks = pygame.sprite.Group()#empty
 
@@ -159,6 +176,55 @@ def draw_shop():
     pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
     screen.blit(bg, (0,0))
 
+def draw_loss_screen():
+    loss_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('You lose trashy')
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
+        screenL2.update()
+        screenL2.draw(loss_screen)
+        pygame.display.flip()
+            
+def draw_win_screen():
+    win_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('You win lololololololololololol')
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
+        screenW2.update()
+        screenW2.draw(win_screen)
+        pygame.display.flip()
+
+def draw_start_screen():
+    start_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('why play, press enter to start')
+
+    screenS2.update()
+    screenS2.draw(start_screen)
+    pygame.display.flip()
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    running = False
+
+    pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
+    screen.blit(bg, (0,0))
+    pygame.display.flip()
+
+draw_start_screen()
+
 collision_timer = 0
 running = True
 def handle_collision():
@@ -170,7 +236,7 @@ def handle_collision():
         if(player.get_hp()<0):
             running = False
 
-# Main game loop
+# Main game loop           
 while running:
     #update enemies location of player
     enemy_ping(enemies, player.getX(), player.getY())
