@@ -157,7 +157,6 @@ running = draw_start_screen()
 while running:
     #update enemies location of player
     enemy_ping(enemy_handler.get_enemies(), player.getX(), player.getY())
-    print(wave)
   
 
     if(wave == 4) and len(enemy_handler.enemies) == 0:
