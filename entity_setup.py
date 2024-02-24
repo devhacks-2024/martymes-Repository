@@ -52,9 +52,9 @@ effect_engine = Effect_Engine()
 
 inv = Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET))
 inv_sprite = pygame.sprite.Group(inv)
-raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/raba.png", 120, 0, 25)
-stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/stormsurge.png" , 90, 0, 10)
-youmuus = Item("Youmuu's", (SCREEN_WIDTH/2 + 168,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/youmuus.png", 0, 60, 0)
+raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/raba.png")
+stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/stormsurge.png")
+youmuus = Item("Youmuu's", (SCREEN_WIDTH/2 + 168,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/youmuus.png")
 
 hp_bar = Hp_Bar()
 hp_bar_sprite = pygame.sprite.Group(hp_bar)
