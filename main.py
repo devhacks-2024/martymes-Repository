@@ -7,63 +7,21 @@ from enemy import *
 from player import *
 from character_frames import *
 from inventory import *
-
 from projectile import *
-
 from item import *
 from effect_engine import *
+from shop_setup import *
+from entity_movement import *
+from var_setup import *
 
 # Initialize Pygame
 pygame.init()
-
-# Set up the screen
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 720
-INV_HEIGHT_OFFSET = 230
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
 bg = pygame.image.load("assets/bg.png").convert()
 
-player_size = 100
-player_hp = 100
-player_speed = 5
-time_halted = [False, 0]
-time_wait = 1000
-
-
-
-# setup item shop assets and whatnot
-font = pygame.font.Font(None, 36)
-item_1 = pygame.sprite.Sprite()
-item_1.image = pygame.image.load("assets/raba.png").convert_alpha()
-item_1.rect = item_1.image.get_rect()
-item_1.rect.center = (900/2 - 136, 500/2 - 100)
-num_1 = font.render('1', True, WHITE)
-num_1_rect = num_1.get_rect()
-num_1_rect.center = (900/2 - 225, 500/2 + 50)
-
-item_2 = pygame.sprite.Sprite()
-item_2.image = pygame.image.load("assets/stormsurge.png").convert_alpha()
-item_2.rect = item_2.image.get_rect()
-item_2.rect.center = (900/2, 500/2 - 100)
-num_2 = font.render('2', True, WHITE)
-num_2_rect = num_2.get_rect()
-num_2_rect.center = (900/2, 500/2 + 50)
-
-num_3 = font.render('3', True, WHITE)
-num_3_rect = num_3.get_rect()
-num_3_rect.center = (900/2 + 225, 500/2 + 50)
-
-shop_items = pygame.sprite.Group((item_1, item_2))
-ITEM_1_BOUGHT = False
-ITEM_2_BOUGHT = False
-ITEM_3_BOUGHT = False
-
 player = Player(player_size, player_speed, player_hp, (0,0), [player_down(), player_up(), player_left(), player_right()])
-
 player_attacks = pygame.sprite.Group()#empty
 
 the_player = pygame.sprite.Group()
@@ -103,8 +61,6 @@ def handle_movement(player):
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             player.moveY(1)
 
-    
-
 def draw_sprites():
     the_player.update()
     player_attacks.update()
@@ -117,18 +73,6 @@ def draw_sprites():
     player_attacks.draw(screen)
     
 
-def enemy_ping(enemies, x, y):
-    for e in enemies.sprites():
-        if isinstance(e, Enemy): 
-            e.player_location(x, y)
-
-def check_halt(halt_player):
-    if(halt_player[1] + time_wait < pygame.time.get_ticks()):
-        halt_player[0] = False
-
-
-# Main game loop
-
 def draw_shop():
     global ITEM_1_BOUGHT
     global ITEM_2_BOUGHT
@@ -139,7 +83,10 @@ def draw_shop():
     running = True
     while running:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_TAB:
+                    running = False
+            elif event.type == pygame.QUIT:
                 running = False
 
         shop_screen.fill(BLACK)
@@ -163,24 +110,63 @@ def draw_shop():
             shop_items.remove(item_2)
 
         pygame.display.flip()
+        pygame.time.Clock().tick(60)
     
     pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
     screen.blit(bg, (0,0))
+    pygame.display.flip()
 
-collision_timer = 0
+def draw_loss_screen():
+    loss_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('You lose trashy')
+
+    screenL2.update()
+    screenL2.draw(loss_screen)
+    pygame.display.flip()
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            
+def draw_win_screen():
+    win_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('You win lololololololololololol')
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        
+        screenW2.update()
+        screenW2.draw(win_screen)
+        pygame.display.flip()
+
+def draw_start_screen():
+    start_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('why play, press enter to start')
+
+    screenS2.update()
+    screenS2.draw(start_screen)
+    pygame.display.flip()
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    running = False
+
+    pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
+    screen.blit(bg, (0,0))
+    pygame.display.flip()
+
+draw_start_screen()
+
 running = True
-def handle_collision():
-    global running
-    global collision_timer
-    if pygame.sprite.spritecollide(player, enemies, dokill=False, collided=None) and collision_timer==0:
-        collision_timer = 50
-        player.take_damage(20)
-        if(player.get_hp()<0):
-            running = False
-
-
-
 # Main game loop
 while running:
     #update enemies location of player
@@ -190,8 +176,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_TAB:
+                draw_shop()
 
-    # Clear the screend
+    # Clear the screen
     screen.blit(bg, (0,0))
     
     if(not time_halted[0]):
@@ -201,22 +190,14 @@ while running:
         player_attack(player, player_attacks, time_halted)
     else: 
         check_halt(time_halted)
-
-    # Check if shop opened
-    if(pygame.key.get_pressed()[pygame.K_TAB]):
-        draw_shop()
-    
-
-    
-
     # Draw the square
     draw_sprites()
 
-    #check if enemy touching player
-    if(collision_timer>0):
-        collision_timer -= 1
-    else:
-        handle_collision()
+    #check if touching only if user has not quit
+    if running:
+        running = handle_player_collision(player, enemies)
+        if not running:
+            draw_loss_screen()
 
     #check if attack touch enemy
     collisions = pygame.sprite.groupcollide(player_attacks, enemies, True, False)
