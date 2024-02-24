@@ -57,8 +57,7 @@ class Character(pygame.sprite.Sprite):
         return self.hp
     
     def take_damage(self, damage):
-        # flash red
-        
+        self.taking_damage = pygame.time.get_ticks()
         self.hp -= damage
         
     def update(self):
@@ -68,10 +67,3 @@ class Character(pygame.sprite.Sprite):
             self.current_animation_index = (self.current_animation_index + 1) % len(self.current_animation)
             self.image = self.current_animation[self.current_animation_index]
             self.last_animation_time = current_time
-
-        
-        # Tint the image red - for damage
-        # red_tint = (255, 0, 0)  # Red color
-        # tinted_image = self.image.copy()  # Make a copy of the original image
-        # tinted_image.fill(red_tint, special_flags=pygame.BLEND_MULT)  # Tint the copied image red
-        # self.image = tinted_image

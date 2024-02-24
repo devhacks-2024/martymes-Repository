@@ -14,8 +14,9 @@ from item import *
 pygame.init()
 
 # Set up the screen
-SCREEN_WIDTH = 1920
-SCREEN_HEIGHT = 1080
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+INV_HEIGHT_OFFSET = 230
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
@@ -27,7 +28,7 @@ player_size = 100
 player_hp = 100
 player_speed = 5
 
-
+# setup item shop assets and whatnot
 font = pygame.font.Font(None, 36)
 item_1 = pygame.sprite.Sprite()
 item_1.image = pygame.image.load("assets/raba.png").convert_alpha()
@@ -59,9 +60,9 @@ player = Player(player_size, player_speed, player_hp, (0,0), [player_down(), pla
 the_player = pygame.sprite.Group()
 the_player.add(player)
 
-inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400)))
-raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400), "assets/raba.png", 120, 0, 25)
-stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400), "assets/stormsurge.png" , 90, 0, 10)
+inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET)))
+raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/raba.png", 120, 0, 25)
+stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/stormsurge.png" , 90, 0, 10)
 
 enemies = pygame.sprite.Group()
 enemy1 = Enemy(player_size, player_speed-4, player_hp, (300, 400), player_down())
@@ -146,6 +147,8 @@ def handle_collision():
         if(player.get_hp()<0):
             running = False
 
+
+
 # Main game loop
 while running:
     #update enemies location of player
@@ -156,7 +159,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # Clear the screen
+    # Clear the screend
     screen.blit(bg, (0,0))
     
     # Check if shop opened
