@@ -18,7 +18,7 @@ class Hp_Bar(pygame.sprite.Sprite):
     self.anim_60 = [pygame.transform.scale(pygame.image.load(asset_names[4]).convert_alpha(), (width,height))]
     self.anim_50 = [pygame.transform.scale(pygame.image.load(asset_names[5]).convert_alpha(), (width,height))]
     self.anim_40 = [pygame.transform.scale(pygame.image.load(asset_names[6]).convert_alpha(), (width,height))]
-    self.anim_30 = [pygame.transform.scale(pygame.image.load(asset_names[7]).convert_alpha(), (width,height)), pygame.image.load(asset_names[8]).convert_alpha()]
+    self.anim_30 = [pygame.transform.scale(pygame.image.load(asset_names[7]).convert_alpha(), (width,height)), pygame.transform.scale(pygame.image.load(asset_names[8]).convert_alpha(), (width, height))]
     self.anim_20 = [pygame.transform.scale(pygame.image.load(asset_names[9]).convert_alpha(), (width, height)), pygame.transform.scale(pygame.image.load(asset_names[10]).convert_alpha(), (width, height))]
     self.anim_10 = [pygame.transform.scale(pygame.image.load(asset_names[11]).convert_alpha(), (width, height)), pygame.transform.scale(pygame.image.load(asset_names[12]).convert_alpha(), (width, height))]
 

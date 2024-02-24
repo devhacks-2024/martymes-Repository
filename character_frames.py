@@ -44,3 +44,9 @@ def freeze_animation():
 
 def freeze_effect():
     return ["assets/bone_effect1.png","assets/bone_effect2.png","assets/bone_effect3.png","assets/bone_effect4.png","assets/bone_effect4.png","assets/bone_effect4.png","assets/bone_effect4.png","assets/bone_effect4.png"]
+
+def boss_right():
+    return ["assets/boss1R.png","assets/boss2R.png","assets/boss3R.png","assets/boss4R.png","assets/boss5R.png","assets/boss6R.png","assets/boss7R.png"]
+
+def boss_left():
+    return ["assets/boss1L.png","assets/boss2L.png","assets/boss3L.png","assets/boss4L.png","assets/boss5L.png","assets/boss6L.png","assets/boss7L.png"]
