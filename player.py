@@ -11,10 +11,10 @@ class Player(Character):
         self.walking_right = self.render_image(idle_animation[3], size)
 
     def moveX(self, move):
-        if(move <= 0):
-            self.direction.change_direction("right")
-        else:
+        if(move < 0):
             self.direction.change_direction("left")
+        else:
+            self.direction.change_direction("right")
         super().moveX(move)
 
     def moveY(self, move):
@@ -24,10 +24,10 @@ class Player(Character):
             self.direction.change_direction("down")
         super().moveY(move)
 
+    def get_direction(self):
+        return self.direction.get_direction()
     
     def update(self):
-        
-
         if(self.direction.get_direction() != self.current_direction):
             if(self.direction.get_direction() == "down"):
                 self.current_animation = self.walking_down
