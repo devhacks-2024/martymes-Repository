@@ -35,3 +35,6 @@ def ghoul_left():
 
 def hp_bar_assets():
     return ["assets/100.png","assets/90.png","assets/80.png","assets/70.png","assets/60.png","assets/50.png","assets/40.png","assets/30flash.png","assets/30.png","assets/20flash.png","assets/20.png","assets/10flash.png","assets/10.png"]
+
+def explosion_animation():
+    return ["assets/exp1.png","assets/exp2.png","assets/exp3.png","assets/exp4.png","assets/exp5.png"]
