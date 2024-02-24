@@ -1,6 +1,6 @@
 from typing import Any
 import pygame
-ALIVE_TIME = 1000
+ALIVE_TIME = 200
 
 class Damage_Area(pygame.sprite.Sprite):
     def __init__(self, damage, start_pos, size) -> None:
