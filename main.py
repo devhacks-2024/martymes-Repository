@@ -27,7 +27,7 @@ def draw_sprites():
     attack_handler.update(screen)
     enemy_handler.update(screen)
     effect_engine.update(screen)
-    inv_update.update()
+    inv_sprite.update()
     hp_bar_sprite.update()
 
     inv_sprite.draw(screen)
