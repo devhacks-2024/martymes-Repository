@@ -49,7 +49,6 @@ def handle_movement():
 def enemy_ping(enemies, x, y):
     for e in enemies.sprites():
         if isinstance(e, enemy): 
-            print("updated")
             e.player_location(x, y)
 
 # Main game loop
