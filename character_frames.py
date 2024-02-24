@@ -17,3 +17,6 @@ def projectile_left():
     return ["assets/attack_left1.png","assets/attack_left2.png", "assets/attack_left3.png"]
 def projectile_right():
     return ["assets/attack_right1.png","assets/attack_right2.png", "assets/attack_right3.png"]
+
+def enemy_death():
+    return ["assets/enemy_explode1.png","assets/enemy_explode2.png","assets/enemy_explode3.png","assets/enemy_explode4.png"]

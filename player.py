@@ -10,11 +10,15 @@ class Player(Character):
         self.walking_up = self.render_image(idle_animation[1], size)
         self.walking_left = self.render_image(idle_animation[2], size)
         self.walking_right = self.render_image(idle_animation[3], size)
+        self.damage = 25
 
         # need damage taking stuff to keep track
         self.taking_damage = -MAX_DAMAGE_TIME
         
 
+    def get_damage(self):
+        return self.damage
+    
     def moveX(self, move):
         if(move < 0):
             self.direction.change_direction("left")

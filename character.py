@@ -1,5 +1,6 @@
 import pygame
 
+MAX_DAMAGE_TIME = 400
 class Character(pygame.sprite.Sprite):
 
     def __init__(self, size, speed, hp, starting_pos, idle_animation):
@@ -12,10 +13,13 @@ class Character(pygame.sprite.Sprite):
         self.rect = self.image.get_rect() #sets the hit box of the sprite
         self.rect.center = starting_pos # Initial the position 
         
+
+
         # Define size and speed attributes
         self.square_size = size
         self.square_speed = speed
         self.hp = hp
+        self.taking_damage = 0
         
         # Walking animation attributes
         self.current_animation = scaled_pictures
@@ -58,9 +62,18 @@ class Character(pygame.sprite.Sprite):
     def get_hp(self) -> int:
         return self.hp
     
+    def is_dead(self):
+        if(self.hp <= 0):
+            self.kill()
+            return True
+
     def take_damage(self, damage):
         self.taking_damage = pygame.time.get_ticks()
         self.hp -= damage
+        self.is_dead()
+    
+
+
         
     def update(self):
         # Update walking animation
@@ -68,4 +81,11 @@ class Character(pygame.sprite.Sprite):
         if current_time - self.last_animation_time > self.current_animation_speed:
             self.current_animation_index = (self.current_animation_index + 1) % len(self.current_animation)
             self.image = self.current_animation[self.current_animation_index]
+            
+            if self.taking_damage + MAX_DAMAGE_TIME > pygame.time.get_ticks():
+                red_tint = (255, 0, 0)  # Red color
+                tinted_image = self.image.copy()  # Make a copy of the original image
+                tinted_image.fill(red_tint, special_flags=pygame.BLEND_MULT)  # Tint the copied image red
+                self.image = tinted_image
+            
             self.last_animation_time = current_time

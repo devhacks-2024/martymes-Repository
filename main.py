@@ -11,7 +11,7 @@ from inventory import *
 from projectile import *
 
 from item import *
-
+from effect_engine import *
 
 # Initialize Pygame
 pygame.init()
@@ -64,11 +64,12 @@ ITEM_3_BOUGHT = False
 
 player = Player(player_size, player_speed, player_hp, (0,0), [player_down(), player_up(), player_left(), player_right()])
 
-
 player_attacks = pygame.sprite.Group()#empty
 
 the_player = pygame.sprite.Group()
 the_player.add(player)
+
+effect_engine = Effect_Engine()
 
 inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET)))
 raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/raba.png", 120, 0, 25)
@@ -82,7 +83,7 @@ def player_attack(player, player_attacks, time_halted):
     keys = pygame.key.get_pressed()
     if keys[pygame.K_p] or keys[pygame.K_SPACE] and not time_halted[0]:
 
-        new_attack = Projectile((player.getX() + player_size//2, player.getY() + player_size//2), player.get_direction(), [projectile_down(), projectile_up(), projectile_left(), projectile_right()])
+        new_attack = Projectile((player.getX() + player_size//2, player.getY() + player_size//2), player.get_damage() ,player.get_direction(), [projectile_down(), projectile_up(), projectile_left(), projectile_right()])
         player_attacks.add(new_attack)
         time_halted[1] = pygame.time.get_ticks()
         time_halted[0] = True
@@ -109,10 +110,12 @@ def draw_sprites():
     player_attacks.update()
     the_player.draw(screen)
     enemies.update()
+    effect_engine.update(screen)
     enemies.draw(screen)
     inv.update()
     inv.draw(screen)
     player_attacks.draw(screen)
+    
 
 def enemy_ping(enemies, x, y):
     for e in enemies.sprites():
@@ -204,15 +207,25 @@ while running:
         draw_shop()
     
 
+    
 
     # Draw the square
     draw_sprites()
 
-    #check if touching
+    #check if enemy touching player
     if(collision_timer>0):
         collision_timer -= 1
     else:
         handle_collision()
+
+    #check if attack touch enemy
+    collisions = pygame.sprite.groupcollide(player_attacks, enemies, True, False)
+    for attack_projectile, colliding_sprites in collisions.items():
+        for the_enemy in colliding_sprites:
+            the_enemy.take_damage(attack_projectile.get_damage())
+            if(the_enemy.is_dead()):
+                #player size is the_enemy bc same sprite
+                effect_engine.enemy_death((the_enemy.getX() + player_size//2, the_enemy.getY()+ player_size//2))
 
     # Update the display
     pygame.display.flip()
