@@ -12,8 +12,6 @@ class Character(pygame.sprite.Sprite):
         self.image = scaled_pictures[0]
         self.rect = self.image.get_rect() #sets the hit box of the sprite
         self.rect.center = starting_pos # Initial the position 
-        
-
 
         # Define size and speed attributes
         self.square_size = size
@@ -71,9 +69,9 @@ class Character(pygame.sprite.Sprite):
         self.taking_damage = pygame.time.get_ticks()
         self.hp -= damage
         self.is_dead()
-    
 
-
+    def get_direction(self):
+        return self.direction.get_direction()
         
     def update(self):
         # Update walking animation

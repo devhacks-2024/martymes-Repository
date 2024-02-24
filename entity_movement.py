@@ -6,7 +6,6 @@ from var_setup import SCREEN_HEIGHT, SCREEN_WIDTH, player_size, DEFAULT_ATTACK_W
 
 pygame.init()
 
-
 collision_timer = 0
 
 def handle_movement(player):
@@ -37,10 +36,11 @@ def player_attack(player, player_attacks, time_halted):
     keys = pygame.key.get_pressed()
     if keys[pygame.K_p] or keys[pygame.K_SPACE] and not time_halted[0]:
 
-        new_attack = Projectile((player.getX() + player_size//2, player.getY() + player_size//2), player.get_direction(), [projectile_down(), projectile_up(), projectile_left(), projectile_right()])
+        new_attack = Projectile((player.getX() + player_size//2, player.getY() + player_size//2), player.get_damage() ,player.get_direction(), [projectile_down(), projectile_up(), projectile_left(), projectile_right()])
         player_attacks.add(new_attack)
         time_halted[1] = pygame.time.get_ticks()
         time_halted[0] = True
+        player.attack_state()
 
 def handle_player_collision(player, enemies) -> bool:
     global collision_timer

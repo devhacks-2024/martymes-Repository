@@ -46,5 +46,3 @@ class Projectile(Character):
 
         if(self.alive_time + 1 > len(self.current_animation)):
             self.kill()
-   
-    

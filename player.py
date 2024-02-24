@@ -1,12 +1,13 @@
 from character import *
 from character_frames import *
 from var_setup import MAX_DAMAGE_TIME, DEFAULT_ATTACK_WAIT
-
+from player_direction import *
+MAX_DAMAGE_TIME = 400
 class Player(Character):
     
     def __init__(self, size, speed, hp, starting_pos, idle_animation):
         super().__init__(size, speed, hp, starting_pos, idle_animation)#down up left right
-        self.direction = Player_Direction()
+        self.direction = Player_Direction("down")
         self.current_direction = "down"
         self.walking_down = self.render_image( player_down(), size)
         self.walking_up = self.render_image( player_up(), size)
@@ -43,9 +44,6 @@ class Player(Character):
         else:
             self.direction.change_direction("down")
         super().moveY(move)
-
-    def get_direction(self):
-        return self.direction.get_direction()
     
     def attack_state(self):
         self.is_attacking[0] = True
@@ -99,35 +97,3 @@ class Player(Character):
                 self.image = tinted_image
             
             self.last_animation_time = current_time
-
-class Player_Direction:
-    def __init__(self) -> None:
-        self.down = True
-        self.up = False
-        self.left = False
-        self.right = False
-
-    def change_direction(self, direction):
-        self.down = False
-        self.up = False
-        self.left = False
-        self.right = False
-
-        if(direction == "down"):
-            self.down = True
-        if(direction == "up"):
-            self.up = True
-        if(direction == "left"):
-            self.left = True
-        if(direction == "right"):
-            self.right = True
-
-    def get_direction(self):
-        if(self.down):
-            return "down" 
-        if(self.up):
-            return "up" 
-        if(self.left):
-            return "left" 
-        if(self.right):
-            return "right" 

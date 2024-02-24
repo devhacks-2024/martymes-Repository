@@ -6,6 +6,7 @@ class Enemy(Character):
         super().__init__(size, speed, hp, starting_position, idle_animation)
         self.player_location_x = 0
         self.player_location_y = 0
+        self.current_direction = "down"
 
     def player_location(self,x,y):
         self.player_location_x = x
