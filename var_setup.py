@@ -9,6 +9,13 @@ BLACK = (0, 0, 0)
 MAX_DAMAGE_TIME = 400
 DEFAULT_ATTACK_WAIT = 1000
 
+#enemies
+ENEMY_SIZE = 50
+ENEMY_SPEED = [1,2,3]#choose one
+ENEMY_HP = 20
+SPAWN_RANGE = 50
+
+
 player_size = 100
 player_hp = 100
 player_speed = 5

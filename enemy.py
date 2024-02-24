@@ -1,4 +1,6 @@
+import random
 from character import *
+
 class Enemy(Character):
     def __init__(self, size, speed, hp, starting_position, idle_animation):
         super().__init__(size, speed, hp, starting_position, idle_animation)
@@ -14,11 +16,11 @@ class Enemy(Character):
         
         #go towards player
         if(self.player_location_y > self.getY()):
-            self.moveY(1)
+            self.moveY(random.uniform(0.5,1))
         else:
-            self.moveY(-1)
+            self.moveY(-1*random.uniform(0.5,1))
         if(self.player_location_x > self.getX()):
-            self.moveX(1)
+            self.moveX(random.uniform(0.5,1))
         else:
-            self.moveX(-1)
+            self.moveX(-1*random.uniform(0.5,1))
         
