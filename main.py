@@ -21,7 +21,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
 bg = pygame.image.load("assets/bg.png").convert()
 
-player = Player(player_size, player_speed, player_hp, (0,0), [player_down(), player_up(), player_left(), player_right()])
+player = Player(player_size, player_speed, player_hp, (0,0), player_down())
 player_attacks = pygame.sprite.Group()#empty
 
 the_player = pygame.sprite.Group()
@@ -46,6 +46,7 @@ def player_attack(player, player_attacks, time_halted):
         player_attacks.add(new_attack)
         time_halted[1] = pygame.time.get_ticks()
         time_halted[0] = True
+        player.attack_state()
 
 def handle_movement(player):
     keys = pygame.key.get_pressed()

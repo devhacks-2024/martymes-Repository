@@ -9,6 +9,15 @@ def player_left():
 def player_right():
     return ["assets/player_right1.png","assets/player_right2.png"]
 
+def player_attack_down():
+    return ["assets/player_attack_down.png"]
+def player_attack_up():
+    return ["assets/player_attack_up.png"]
+def player_attack_left():
+    return ["assets/player_attack_left.png"]
+def player_attack_right():
+    return ["assets/player_attack_right.png"]
+
 def projectile_down():
     return ["assets/attack_down1.png","assets/attack_down2.png", "assets/attack_down3.png"]
 def projectile_up():
