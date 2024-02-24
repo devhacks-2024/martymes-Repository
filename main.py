@@ -11,24 +11,50 @@ from item import *
 pygame.init()
 
 # Set up the screen
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Movable Square")
+pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
 
 player_size = 100
 player_speed = 5
+
+font = pygame.font.Font(None, 36)
+item_1 = pygame.sprite.Sprite()
+item_1.image = pygame.image.load("assets/raba.png").convert_alpha()
+item_1.rect = item_1.image.get_rect()
+item_1.rect.center = (900/2 - 136, 500/2 - 100)
+num_1 = font.render('1', True, WHITE)
+num_1_rect = num_1.get_rect()
+num_1_rect.center = (900/2 - 225, 500/2 + 50)
+
+item_2 = pygame.sprite.Sprite()
+item_2.image = pygame.image.load("assets/stormsurge.png").convert_alpha()
+item_2.rect = item_2.image.get_rect()
+item_2.rect.center = (900/2, 500/2 - 100)
+num_2 = font.render('2', True, WHITE)
+num_2_rect = num_2.get_rect()
+num_2_rect.center = (900/2, 500/2 + 50)
+
+num_3 = font.render('3', True, WHITE)
+num_3_rect = num_3.get_rect()
+num_3_rect.center = (900/2 + 225, 500/2 + 50)
+
+shop_items = pygame.sprite.Group((item_1, item_2))
+ITEM_1_BOUGHT = False
+ITEM_2_BOUGHT = False
+ITEM_3_BOUGHT = False
 
 player = character(player_size, player_speed, (0,0))
 the_player = pygame.sprite.Group()
 the_player.add(player)
 
-inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 170)))
-raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 170), "assets/raba.png", 120, 0, 25)
-items = pygame.sprite.Group(raba)
+inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400)))
+raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400), "assets/raba.png", 120, 0, 25)
+stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400), "assets/stormsurge.png" , 90, 0, 10)
 
 enemies = pygame.sprite.Group()
 enemy1 = enemy(player_size, player_speed-4, (300, 400))
@@ -57,13 +83,49 @@ def draw_sprites():
     enemies.draw(screen)
     inv.update()
     inv.draw(screen)
-    items.update()
-    items.draw(screen)
 
 def enemy_ping(enemies, x, y):
     for e in enemies.sprites():
         if isinstance(e, enemy): 
             e.player_location(x, y)
+
+def draw_shop():
+    global ITEM_1_BOUGHT
+    global ITEM_2_BOUGHT
+    global ITEM_3_BOUGHT
+    shop_screen = pygame.display.set_mode((900, 500))
+    pygame.display.set_caption('Buy Menu')
+    
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        shop_screen.fill(BLACK)
+        if not ITEM_1_BOUGHT:
+            shop_screen.blit(num_1, num_1_rect)
+        if not ITEM_2_BOUGHT:
+            shop_screen.blit(num_2, num_2_rect)
+        if not ITEM_3_BOUGHT:
+            shop_screen.blit(num_3, num_3_rect)
+        shop_items.update()
+        shop_items.draw(shop_screen)
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_1]:
+            ITEM_1_BOUGHT = True
+            inv.add(raba)
+            shop_items.remove(item_1)
+        elif keys[pygame.K_2]:
+            ITEM_2_BOUGHT = True
+            inv.add(stormsurge)
+            shop_items.remove(item_2)
+
+        pygame.display.flip()
+    
+    pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
 
 # Main game loop
 running = True
@@ -78,18 +140,19 @@ while running:
 
     # Clear the screen
     screen.fill(BLACK)
-
+    
+    # Check if shop opened
+    if(pygame.key.get_pressed()[pygame.K_TAB]):
+        draw_shop()
+    
     # Handle player input
     handle_movement()
 
     # Draw the square
     draw_sprites()
 
-
     #check if touching
     colliding_sprites = pygame.sprite.spritecollide(player, enemies, dokill=True, collided=None)
-
-
 
     # Update the display
     pygame.display.flip()
