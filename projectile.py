@@ -9,7 +9,7 @@ class Projectile(Character):
         self.direction = direction
         animation = self.projectile_direction(direction, animations)#down up left right
 
-        super().__init__(self.size, self.speed, start_pos, animation)
+        super().__init__(self.size, self.speed, 0, start_pos, animation)
         
         self.current_animation_speed = 500
         self.alive_time = 0
