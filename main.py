@@ -3,6 +3,7 @@ import sys
 
 from character import *
 from enemy import *
+from inventory import *
 
 
 # Initialize Pygame
@@ -23,6 +24,9 @@ player_speed = 5
 player = character(player_size, player_speed, (0,0))
 the_player = pygame.sprite.Group()
 the_player.add(player)
+
+inv_sprite = Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 170))
+inv = pygame.sprite.Group(inv_sprite)
 
 
 enemies = pygame.sprite.Group()
@@ -45,6 +49,13 @@ def handle_movement():
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             player.moveY(1)
 
+def draw_sprites():
+    enemies.update()
+    the_player.update()
+    inv.update()
+    the_player.draw(screen)
+    enemies.draw(screen)
+    inv.draw(screen)
 
 def enemy_ping(enemies, x, y):
     for e in enemies.sprites():
@@ -69,10 +80,7 @@ while running:
     handle_movement()
 
     # Draw the square
-    enemies.update()
-    the_player.update()
-    the_player.draw(screen)
-    enemies.draw(screen)
+    draw_sprites()
 
 
     #check if touching
