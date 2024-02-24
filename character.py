@@ -1,6 +1,7 @@
 import pygame
 
 class Character(pygame.sprite.Sprite):
+
     def __init__(self, size, speed, hp, starting_pos, idle_animation):
         super().__init__()
         # Load and scale player images for walking animation
@@ -34,6 +35,7 @@ class Character(pygame.sprite.Sprite):
             scaled_pictures.append(pygame.transform.scale(pic, (scaled_width, scaled_height)))
 
         return scaled_pictures
+
 
     def moveX(self, move):
         self.rect.x += move * self.square_speed

@@ -7,6 +7,9 @@ from enemy import *
 from player import *
 from character_frames import *
 from inventory import *
+
+from projectile import *
+
 from item import *
 
 
@@ -27,6 +30,10 @@ bg = pygame.image.load("assets/bg.png").convert()
 player_size = 100
 player_hp = 100
 player_speed = 5
+time_halted = [False, 0]
+time_wait = 1000
+
+
 
 # setup item shop assets and whatnot
 font = pygame.font.Font(None, 36)
@@ -55,7 +62,10 @@ ITEM_1_BOUGHT = False
 ITEM_2_BOUGHT = False
 ITEM_3_BOUGHT = False
 
-player = Player(player_size, player_speed, player_hp, (0,0), [player_down(), player_up(), player_right(), player_left()])
+player = Player(player_size, player_speed, player_hp, (0,0), [player_down(), player_up(), player_left(), player_right()])
+
+
+player_attacks = pygame.sprite.Group()#empty
 
 the_player = pygame.sprite.Group()
 the_player.add(player)
@@ -68,8 +78,16 @@ enemies = pygame.sprite.Group()
 enemy1 = Enemy(player_size, player_speed-4, player_hp, (300, 400), player_down())
 enemies.add(enemy1)
 
-def handle_movement():
-    global player
+def player_attack(player, player_attacks, time_halted):
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_p] or keys[pygame.K_SPACE] and not time_halted[0]:
+
+        new_attack = Projectile((player.getX() + player_size//2, player.getY() + player_size//2), player.get_direction(), [projectile_down(), projectile_up(), projectile_left(), projectile_right()])
+        player_attacks.add(new_attack)
+        time_halted[1] = pygame.time.get_ticks()
+        time_halted[0] = True
+
+def handle_movement(player):
     keys = pygame.key.get_pressed()
     if  player.getX() > 0:
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
@@ -84,18 +102,29 @@ def handle_movement():
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             player.moveY(1)
 
+    
+
 def draw_sprites():
     the_player.update()
+    player_attacks.update()
     the_player.draw(screen)
     enemies.update()
     enemies.draw(screen)
     inv.update()
     inv.draw(screen)
+    player_attacks.draw(screen)
 
 def enemy_ping(enemies, x, y):
     for e in enemies.sprites():
         if isinstance(e, Enemy): 
             e.player_location(x, y)
+
+def check_halt(halt_player):
+    if(halt_player[1] + time_wait < pygame.time.get_ticks()):
+        halt_player[0] = False
+
+
+# Main game loop
 
 def draw_shop():
     global ITEM_1_BOUGHT
@@ -162,12 +191,19 @@ while running:
     # Clear the screend
     screen.blit(bg, (0,0))
     
+    if(not time_halted[0]):
+        # Handle player input
+        handle_movement(player)
+        #Handle player attack
+        player_attack(player, player_attacks, time_halted)
+    else: 
+        check_halt(time_halted)
+
     # Check if shop opened
     if(pygame.key.get_pressed()[pygame.K_TAB]):
         draw_shop()
     
-    # Handle player input
-    handle_movement()
+
 
     # Draw the square
     draw_sprites()
