@@ -29,6 +29,8 @@ raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIG
 stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/stormsurge.png" , 90, 0, 10)
 youmuus = Item("Youmuu's", (SCREEN_WIDTH/2 + 168,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/youmuus.png", 0, 60, 0)
 
+hp_bar = pygame.sprite.Group()
+
 enemies = pygame.sprite.Group()
 enemy1 = Enemy(player_size, random.randint(1, player_speed-2), player_hp, (random.randint(0, SCREEN_WIDTH), random.randint(0, SCREEN_HEIGHT)), player_down())
 ghoul = Small_Enemy(player_size, random.randint(2,player_speed-1), 20, (random.randint(0, SCREEN_WIDTH), random.randint(0, SCREEN_HEIGHT)), [ghoul_right(), ghoul_left()])
