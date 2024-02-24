@@ -15,32 +15,10 @@ from effect_engine import *
 from shop_setup import *
 from entity_movement import *
 from var_setup import *
+from entity_setup import *
 
 # Initialize Pygame
 pygame.init()
-
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
-bg = pygame.image.load("assets/bg.png").convert()
-
-player = Player(player_size, player_speed, player_hp, (0,0), player_down())
-player_attacks = pygame.sprite.Group()#empty
-
-the_player = pygame.sprite.Group()
-the_player.add(player)
-
-effect_engine = Effect_Engine()
-
-inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET)))
-raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/raba.png", 120, 0, 25)
-stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/stormsurge.png" , 90, 0, 10)
-youmuus = Item("Youmuu's", (SCREEN_WIDTH/2 + 168,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/youmuus.png", 0, 60, 0)
-
-enemies = pygame.sprite.Group()
-enemy1 = Enemy(player_size, random.randint(1, player_speed-2), player_hp, (random.randint(0, SCREEN_WIDTH), random.randint(0, SCREEN_HEIGHT)), player_down())
-ghoul = Small_Enemy(player_size, random.randint(2,player_speed-1), 20, (random.randint(0, SCREEN_WIDTH), random.randint(0, SCREEN_HEIGHT)), [ghoul_right(), ghoul_left()])
-enemies.add(enemy1)
-enemies.add(ghoul)
 
 def player_attack(player, player_attacks, time_halted):
     keys = pygame.key.get_pressed()
@@ -51,21 +29,6 @@ def player_attack(player, player_attacks, time_halted):
         time_halted[1] = pygame.time.get_ticks()
         time_halted[0] = True
         player.attack_state()
-
-def handle_movement(player):
-    keys = pygame.key.get_pressed()
-    if  player.getX() > 0:
-        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-            player.moveX(-1)
-    if player.getX() < SCREEN_WIDTH - player.get_width():
-        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-            player.moveX(1)
-    if player.getY() > 0:
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
-            player.moveY(-1)
-    if player.getY() < SCREEN_HEIGHT - player.get_height():
-        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-            player.moveY(1)
 
 def draw_sprites():
     the_player.update()
@@ -78,7 +41,6 @@ def draw_sprites():
     inv.draw(screen)
     player_attacks.draw(screen)
     
-
 def draw_shop():
     global ITEM_1_BOUGHT
     global ITEM_2_BOUGHT
