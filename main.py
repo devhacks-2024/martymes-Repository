@@ -21,9 +21,6 @@ from entity_setup import *
 # Initialize Pygame
 pygame.init()
 
-enemy_handler = Enemy_Spawner()
-enemy_handler.create_wave(30, "right")
-
 def draw_sprites():
     the_player.update()
     player_attacks.update()
