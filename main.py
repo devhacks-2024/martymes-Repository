@@ -3,6 +3,9 @@ import sys
 
 from character import *
 from enemy import *
+
+from player import *
+from character_frames import *
 from inventory import *
 from item import *
 
@@ -21,6 +24,7 @@ pygame.display.set_caption('DIMENSION OF THE DERANGED DEITY')
 
 player_size = 100
 player_speed = 5
+
 
 font = pygame.font.Font(None, 36)
 item_1 = pygame.sprite.Sprite()
@@ -48,7 +52,8 @@ ITEM_1_BOUGHT = False
 ITEM_2_BOUGHT = False
 ITEM_3_BOUGHT = False
 
-player = character(player_size, player_speed, (0,0))
+player = Player(player_size, player_speed, (0,0), [player_down(), player_up(), player_right(), player_left()])
+
 the_player = pygame.sprite.Group()
 the_player.add(player)
 
@@ -57,7 +62,7 @@ raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400), "a
 stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + 400), "assets/stormsurge.png" , 90, 0, 10)
 
 enemies = pygame.sprite.Group()
-enemy1 = enemy(player_size, player_speed-4, (300, 400))
+enemy1 = Enemy(player_size, player_speed-4, (300, 400), player_down())
 enemies.add(enemy1)
 
 def handle_movement():
@@ -86,7 +91,7 @@ def draw_sprites():
 
 def enemy_ping(enemies, x, y):
     for e in enemies.sprites():
-        if isinstance(e, enemy): 
+        if isinstance(e, Enemy): 
             e.player_location(x, y)
 
 def draw_shop():
