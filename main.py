@@ -1,25 +1,28 @@
 import pygame
 import sys
 
+from character import *
+
 # Initialize Pygame
 pygame.init()
 
 # Set up the screen
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Movable Square")
-
-# Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-# Set up the square
-square_size = 50
-square_color = WHITE
-square_x = (SCREEN_WIDTH - square_size) // 2
-square_y = (SCREEN_HEIGHT - square_size) // 2
-square_speed = 5
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Movable Square")
+
+player_size = 100
+player_colour = WHITE
+player_speed = 5
+player = character(player_size, player_speed)
+
+#create a sprite group
+all_sprites = pygame.sprite.Group()
+all_sprites.add(player)
 
 # Main game loop
 running = True
@@ -32,19 +35,20 @@ while running:
     # Handle player input
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-        square_x -= square_speed
+        player.moveX(-1)
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-        square_x += square_speed
+        player.moveX(1)
     if keys[pygame.K_UP] or keys[pygame.K_w]:
-        square_y -= square_speed
+       player.moveY(-1)
     if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-        square_y += square_speed
+        player.moveY(1)
 
     # Clear the screen
     screen.fill(BLACK)
 
     # Draw the square
-    pygame.draw.rect(screen, square_color, (square_x, square_y, square_size, square_size))
+    all_sprites.update()
+    all_sprites.draw(screen)
 
     # Update the display
     pygame.display.flip()
