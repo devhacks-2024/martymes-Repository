@@ -36,7 +36,7 @@ screenW.rect = screenW.image.get_rect()
 screenW2 = pygame.sprite.Group(screenW)
 
 screenS = pygame.sprite.Sprite()
-screenS.image = pygame.image.load("assets/start_screen.png")
+screenS.image = pygame.image.load("assets/title.png")
 screenS.rect = screenS.image.get_rect()
 
 screenS2 = pygame.sprite.Group(screenS)
