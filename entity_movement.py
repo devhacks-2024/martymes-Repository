@@ -36,9 +36,10 @@ def check_halt(halt_player):
 
 def handle_player_collision(player, hp_bar, enemies) -> bool:
     global collision_timer
-    if pygame.sprite.spritecollide(player, enemies, dokill=False, collided=None) and collision_timer==0:
+    coll = pygame.sprite.spritecollide(player, enemies, dokill=False, collided=None)
+    if coll and collision_timer==0:
         collision_timer = 50
-        player.take_damage(20)
+        player.take_damage(coll[0].get_damage())
         hp_bar.update_hp(player.get_hp())
         if(player.get_hp()<=0):
             return False

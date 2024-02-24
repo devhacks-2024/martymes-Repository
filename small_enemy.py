@@ -1,8 +1,8 @@
 from enemy import Enemy
 from player_direction import *
 class Small_Enemy(Enemy):
-  def __init__(self, size, speed, hp, starting_position, idle_animation):
-    super().__init__(size, speed, hp, starting_position, idle_animation[0])
+  def __init__(self, size, speed, hp, damage, starting_position, idle_animation):
+    super().__init__(size, speed, hp, damage, starting_position, idle_animation[0])
     
     self.walking_right = self.render_image(idle_animation[0], size)
     self.walking_left = self.render_image(idle_animation[1], size)

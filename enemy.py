@@ -4,13 +4,18 @@ HALT_TIME = 2000
 
 
 class Enemy(Character):
-    def __init__(self, size, speed, hp, starting_position, idle_animation):
+    def __init__(self, size, speed, hp, damage, starting_position, idle_animation):
         super().__init__(size, speed, hp, starting_position, idle_animation)
         self.player_location_x = 0
         self.player_location_y = 0
         self.current_direction = "down"
 
+        self.damage = damage
+
         self.halt = [False, 0]
+
+    def get_damage(self):
+        return self.damage
 
     def player_location(self,x,y):
         self.player_location_x = x

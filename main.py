@@ -44,8 +44,6 @@ def draw_shop():
     shop_screen = pygame.display.set_mode((900, 500))
     pygame.display.set_caption('Buy Menu')
 
-    
-    
     running = True
     while running:
         shop_screen.fill(BLACK)
