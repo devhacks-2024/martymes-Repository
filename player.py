@@ -1,8 +1,8 @@
 from character import *
 class Player(Character):
     
-    def __init__(self, size, speed, starting_pos, idle_animation):
-        super().__init__(size, speed, starting_pos, idle_animation[0])#down up left right
+    def __init__(self, size, speed, hp, starting_pos, idle_animation):
+        super().__init__(size, speed, hp, starting_pos, idle_animation[0])#down up left right
         self.direction = Player_Direction()
         self.current_direction = "down"
         self.walking_down = self.render_image( idle_animation[0], size)
@@ -26,8 +26,6 @@ class Player(Character):
 
     
     def update(self):
-        
-
         if(self.direction.get_direction() != self.current_direction):
             if(self.direction.get_direction() == "down"):
                 self.current_animation = self.walking_down
