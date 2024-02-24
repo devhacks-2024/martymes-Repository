@@ -9,9 +9,24 @@ class Small_Enemy(Enemy):
     self.direction = Player_Direction("right")
     self.current_direction = "right"
 
+  def moveX(self, move):
+    if(move < 0):
+        self.direction.change_direction("left")
+    else:
+        self.direction.change_direction("right")
+    super().moveX(move)
+
+  def moveY(self, move):
+      if(move <= 0):
+          self.direction.change_direction("up")
+      else:
+          self.direction.change_direction("down")
+      super().moveY(move)
+
   def update(self):
     super().update()
 
+    print(self.direction.get_direction())
     if(self.direction.get_direction() != self.current_direction):
       if(self.direction.get_direction() == "left"):
         self.current_animation = self.walking_left
