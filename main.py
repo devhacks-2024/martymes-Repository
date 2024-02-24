@@ -32,6 +32,7 @@ effect_engine = Effect_Engine()
 inv = pygame.sprite.Group(Inventory((SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET)))
 raba = Item("Rabadon's Deathcap", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/raba.png", 120, 0, 25)
 stormsurge = Item("Stormsurge", (SCREEN_WIDTH/2 + 8,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/stormsurge.png" , 90, 0, 10)
+youmuus = Item("Youmuu's", (SCREEN_WIDTH/2 + 168,SCREEN_HEIGHT/2 + INV_HEIGHT_OFFSET), "assets/youmuus.png", 0, 60, 0)
 
 enemies = pygame.sprite.Group()
 enemy1 = Enemy(player_size, player_speed-4, player_hp, (300, 400), player_down())
@@ -108,6 +109,10 @@ def draw_shop():
             ITEM_2_BOUGHT = True
             inv.add(stormsurge)
             shop_items.remove(item_2)
+        elif keys[pygame.K_3]:
+            ITEM_3_BOUGHT = True
+            inv.add(youmuus)
+            shop_items.remove(item_3)
 
         pygame.display.flip()
         pygame.time.Clock().tick(60)
